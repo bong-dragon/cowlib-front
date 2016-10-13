@@ -19,7 +19,7 @@ if(process.env.NODE_ENV == 'development') {
 }
 app.use('/', express.static(__dirname + '/../public'));
 
-import books from './routes/books';
+import books from './routes/booksSample';
 app.use('/books', books);
 
 const server = app.listen(port, () => {
