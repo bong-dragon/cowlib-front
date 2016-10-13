@@ -8,7 +8,8 @@
     "mysql": "^2.11.1",
     "react": "^15.3.2",
     "react-bootstrap": "^0.30.3",
-    "react-dom": "^15.3.2"
+    "react-dom": "^15.3.2",
+    "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.17.0",
