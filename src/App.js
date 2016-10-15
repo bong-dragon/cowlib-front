@@ -3,7 +3,6 @@ import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap'
 import 'whatwg-fetch';
 
 
-
 export default class App extends React.Component {
 
     constructor() {
@@ -30,7 +29,7 @@ export default class App extends React.Component {
 
     render() {
         var books = this.state.books;
-        var newbook= books.map(function (book, i) {
+        var newbook = books.map(function (book, i) {
             return (
                 <Col xs={6} md={4}>
                     <Thumbnail src={book.cover_url} alt="242x200">
@@ -47,6 +46,9 @@ export default class App extends React.Component {
         });
         return (
             <Grid>
+                <Row>
+                    <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+                </Row>
                 <Row>
                     {newbook}
                 </Row>
