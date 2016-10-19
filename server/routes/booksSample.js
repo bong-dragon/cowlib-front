@@ -23,5 +23,17 @@ router.get('/', (req, res) => {
     return res.json(rows);       
 });
 
+router.get('/:userId', (req, res) => {
+    console.log(req.params.userId);
+    var rows = [{
+        cover_url: "./img/test1.jpeg"
+    }, {
+        cover_url: "./img/test2.jpeg"
+    }, {
+        cover_url: "./img/test3.jpeg"
+    }];
+    return res.json(rows);
+});
+
 
 export default router;
