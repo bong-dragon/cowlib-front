@@ -1,5 +1,4 @@
-import express from 'express';
-import mysql from 'mysql';
+import express from "express";
 
 
 const router = express.Router();
@@ -10,7 +9,6 @@ router.post('/', (req, res) => {
     };
     return res.json(rows);
 });
-
 
 router.get('/', (req, res) => {
     var rows = [{
@@ -24,7 +22,9 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:userId', (req, res) => {
+
     console.log(req.params.userId);
+    
     var rows = [{
         cover_url: "./img/test1.jpeg"
     }, {

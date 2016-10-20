@@ -4,11 +4,8 @@ import passport from 'passport';
 
 const router = express.Router();
 
-router.get('/profile', isLoggedIn, (req, res) => {
-    res.json({
-        user: req.user,
-        etc: "hello"
-    });
+router.get('/success', isLoggedIn, (req, res) => {
+    res.redirect('/books/'+ req.user.id);
 });
 
 router.get('/fail', isLoggedIn, (req, res) => {
@@ -22,7 +19,7 @@ router.get('/facebook', passport.authenticate('facebook', {scope: 'email'}));
 // handle the callback after facebook has authenticated the user
 router.get('/facebook/callback',
     passport.authenticate('facebook', {
-        successRedirect: '/auth/profile',
+        successRedirect: '/auth/success',
         failureRedirect: '/auth/fail'
     })
 );
