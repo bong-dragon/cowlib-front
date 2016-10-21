@@ -22,8 +22,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:userId', (req, res) => {
-
-    console.log(req.params.userId);
     
     var rows = [{
         cover_url: "./img/test1.jpeg"
