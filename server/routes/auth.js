@@ -1,11 +1,34 @@
 import express from 'express';
 import passport from 'passport';
+import mysql from 'mysql';
 
 
 const router = express.Router();
 
 router.get('/success', isLoggedIn, (req, res) => {
-    res.redirect('/books/'+ req.user.id);
+
+    var connection = mysql.createConnection({
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        port: '3306',
+        database: 'cowlib'
+    });
+
+    connection.connect();
+
+    connection.query('select * from user where facebook_id=?;', req.user.id, function (err, rows, fields) {
+        if (rows.length == 0) {
+            connection.query('insert into user (facebook_id) values(?);', req.user.id, function (err, rows, fields) {
+                if (err) {
+                    console.log("fail" + err);
+                }
+            });
+        }
+    });
+
+
+    res.redirect('/books/' + req.user.id);
 });
 
 router.get('/fail', isLoggedIn, (req, res) => {
