@@ -26,7 +26,7 @@ router.get('/success', isLoggedIn, (req, res) => {
             });
         }
     });
-
+    connection.end();
 
     res.redirect('/books/' + req.user.id);
 });
