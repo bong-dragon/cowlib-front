@@ -53,6 +53,23 @@ router.get('/logout', function (req, res) {
     res.redirect('/');
 });
 
+router.get('/', (req, res) => {
+    if (req.isAuthenticated()) {
+        //db에서 req.user.id 가지고 찾기
+        res.json({
+            id: 1234,
+            profile: "photo url",
+            name : "이경륜",
+            bookmark : [
+                1234123, 1231231
+            ]
+        })
+    } else {
+        res.statusCode(403);
+    }
+});
+
+
 function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
