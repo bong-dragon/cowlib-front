@@ -2,6 +2,7 @@ import express from "express";
 
 
 const router = express.Router();
+const err = false;
 
 router.get('/search', (req, res) => {
     // parameter: q, 검색어
@@ -24,17 +25,17 @@ router.get('/search', (req, res) => {
 router.post('/:ownerId/:bookId', (req, res) => {
     // user_has_book 에 추가
     if (!err)
-        res.statusCode(200);
+        res.sendStatus(200);
     else
-        res.statusCode(500);
+        res.sendStatus(500);
 });
 
 router.delete('/:ownerId/:bookId', (req, res) => {
     // user_has_book 의 is_deleted true로 변경
     if (!err)
-        res.statusCode(200);
+        res.sendStatus(200);
     else
-        res.statusCode(500);
+        res.sendStatus(500);
 });
 
 
@@ -53,9 +54,9 @@ router.post('/:ownerId/:bookId/borrow', (req, res) => {
     // db에 borrow_history에 추가
     // wait_hitory 상태 COMPLETE으로 변경
     if (!err)
-        res.statusCode(200);
+        res.sendStatus(200);
     else
-        res.statusCode(500);
+        res.sendStatus(500);
 });
 
 router.delete('/:ownerId/:bookId/borrow', (req, res) => {
@@ -63,9 +64,9 @@ router.delete('/:ownerId/:bookId/borrow', (req, res) => {
     // db에 borrow_history 상태를 RETURN으로 변경
 
     if (!err)
-        res.statusCode(200);
+        res.sendStatus(200);
     else
-        res.statusCode(500);
+        res.sendStatus(500);
 });
 
 
@@ -74,9 +75,9 @@ router.put('/:ownerId/:bookId/wait', (req, res) => {
     // wait_hitory 상태 REJECT으로 변경
 
     if (!err)
-        res.statusCode(200);
+        res.sendStatus(200);
     else
-        res.statusCode(500);
+        res.sendStatus(500);
 });
 
 router.delete('/:ownerId/:bookId/wait', (req, res) => {
@@ -84,9 +85,9 @@ router.delete('/:ownerId/:bookId/wait', (req, res) => {
     // wait_hitory 상태 CANCEL으로 변경
 
     if (!err)
-        res.statusCode(200);
+        res.sendStatus(200);
     else
-        res.statusCode(500);
+        res.sendStatus(500);
 });
 
 router.post('/:ownerId/:bookId/wait', (req, res) => {
@@ -94,9 +95,9 @@ router.post('/:ownerId/:bookId/wait', (req, res) => {
     // wait_hitory 추가
 
     if (!err)
-        res.statusCode(200);
+        res.sendStatus(200);
     else
-        res.statusCode(500);
+        res.sendStatus(500);
 });
 
 router.get('/:ownerId', (req, res) => {
