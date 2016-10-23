@@ -1,25 +1,34 @@
 import express from "express";
-
+import 'isomorphic-fetch';
 
 const router = express.Router();
 const err = false;
-
+const DAUM_BOOK_SEARCH_URL = "https://apis.daum.net/search/book";
+const APIKEY = "";
 router.get('/search', (req, res) => {
     // parameter: q, 검색어
     // daum book api 호출
     // db에 없다면 insert
-
-    return res.json([{
-        id: 123123,
-        title: "콩고",
-        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
-        cover_l_url: "https://t1.search.daumcdn.net/thumb/P110x160/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fbook%2FBOK00030403128YE%3Fmoddttm=20161023090658",
-    }, {
-        id: 123123,
-        title: "콩고",
-        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
-        cover_l_url: "https://t1.search.daumcdn.net/thumb/P110x160/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fbook%2FBOK00030403128YE%3Fmoddttm=20161023090658",
-    }]);
+    fetch(DAUM_BOOK_SEARCH_URL + "?output=json&apikey=" + APIKEY + "&q=" + req.query.q, {
+        method: 'GET',
+    }).then(function (response) {
+        return response.json();
+    }).then(function (json) {
+        res.json(json.channel.item);
+    }).catch(function (ex) {
+        console.log('parsing failed', ex)
+    });
+    // return res.json([{
+    //     id: 123123,
+    //     title: "콩고",
+    //     link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+    //     cover_l_url: "https://t1.search.daumcdn.net/thumb/P110x160/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fbook%2FBOK00030403128YE%3Fmoddttm=20161023090658",
+    // }, {
+    //     id: 123123,
+    //     title: "콩고",
+    //     link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+    //     cover_l_url: "https://t1.search.daumcdn.net/thumb/P110x160/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fbook%2FBOK00030403128YE%3Fmoddttm=20161023090658",
+    // }]);
 });
 
 router.post('/:ownerId/:bookId', (req, res) => {
