@@ -69,7 +69,7 @@ router.delete('/:ownerId/:bookId/borrow', (req, res) => {
 });
 
 
-router.update('/:ownerId/:bookId/wait', (req, res) => {
+router.put('/:ownerId/:bookId/wait', (req, res) => {
     // parameter: borrower 빌리기 요청한 사람 id,
     // wait_hitory 상태 REJECT으로 변경
 
