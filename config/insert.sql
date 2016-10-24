@@ -1,0 +1,2 @@
+insert into user values(default, "1002237446564958", "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/13001039_876663422455695_2534326839987696276_n.jpg?oh=376c676761df7ed408fb78c1c232d60c&oe=58A1DBB4", "이경륜", "false")
+insert into user values(default, "1002237446564959", "https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/13001039_876663422455695_2534326839987696276_n.jpg?oh=376c676761df7ed408fb78c1c232d60c&oe=58A1DBB4", "테스트", "false")

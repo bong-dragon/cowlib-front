@@ -1,25 +1,22 @@
 import express from 'express';
 import passport from 'passport';
 import mysql from 'mysql';
+import config from '../../config/config';
 
 
 const router = express.Router();
 
 router.get('/success', isLoggedIn, (req, res) => {
 
-    var connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: '',
-        port: '3306',
-        database: 'cowlib'
-    });
+    var connection = mysql.createConnection(config.mysql);
 
     connection.connect();
 
+
     connection.query('select * from user where facebook_id=?;', req.user.id, function (err, rows, fields) {
         if (rows.length == 0) {
-            connection.query('insert into user (facebook_id) values(?);', req.user.id, function (err, rows, fields) {
+            connection.query('insert into user values(default, ?, ?, ?, "false");', 
+                req.user.id, req.user.photos[0].value, req.user.displayName, function (err, rows, fields) {
                 if (err) {
                     console.log("fail" + err);
                 }
@@ -37,7 +34,7 @@ router.get('/fail', isLoggedIn, (req, res) => {
     });
 });
 
-router.get('/facebook', passport.authenticate('facebook', {scope: 'email'}));
+router.get('/facebook', passport.authenticate('facebook', {scope: ['email', 'public_profile', 'user_friends']}));
 
 // handle the callback after facebook has authenticated the user
 router.get('/facebook/callback',
