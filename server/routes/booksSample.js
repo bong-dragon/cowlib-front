@@ -10,8 +10,8 @@ const APIKEY = "";
 
 router.get('/search', (req, res) => {
 
-    var callback = function(blogs) {
-        res.send(blogs);
+    var callback = function(books) {
+        res.json(books);
     };
     
     fetch(DAUM_BOOK_SEARCH_URL + "?output=json&apikey=" + APIKEY + "&q=" + req.query.q, {
