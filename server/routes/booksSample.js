@@ -1,25 +1,71 @@
 import express from "express";
-
+import 'isomorphic-fetch';
+import mysql from 'mysql';
 
 const router = express.Router();
 const err = false;
+const DAUM_BOOK_SEARCH_URL = "https://apis.daum.net/search/book";
+const APIKEY = "";
+
 
 router.get('/search', (req, res) => {
-    // parameter: q, 검색어
-    // daum book api 호출
-    // db에 없다면 insert
 
-    return res.json([{
-        id: 123123,
-        title: "콩고",
-        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
-        cover_l_url: "https://t1.search.daumcdn.net/thumb/P110x160/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fbook%2FBOK00030403128YE%3Fmoddttm=20161023090658",
-    }, {
-        id: 123123,
-        title: "콩고",
-        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
-        cover_l_url: "https://t1.search.daumcdn.net/thumb/P110x160/?fname=http%3A%2F%2Ft1.daumcdn.net%2Fbook%2FBOK00030403128YE%3Fmoddttm=20161023090658",
-    }]);
+    var callback = function(books) {
+        res.json(books);
+    };
+    
+    fetch(DAUM_BOOK_SEARCH_URL + "?output=json&apikey=" + APIKEY + "&q=" + req.query.q, {
+        method: 'GET',
+    }).then(function (response) {
+        return response.json();
+    }).then(function (json) {
+
+        var items = json.channel.item;
+        var connection = mysql.createConnection({
+            host     : 'localhost',
+            user     : 'root',
+            password : '',
+            port     : '3306',
+            database : 'cowlib'
+        });
+
+        connection.connect();
+
+        var ret =[];
+        var pending = items.length;
+
+        items.forEach(function(item, idx){
+
+            var data = [item.isbn, item.isbn13, item.title, item.author, item.description, item.pub_nm, item.cover_l_url];
+            var isbns = [item.isbn, item.isbn13];
+            ret.push(data);
+
+            connection.query('select * from book where isbn=? or isbn13=?;', isbns, function (err, rows, fields) {
+                if (rows.length == 0) {
+                    connection.query('insert into book (isbn, isbn13, title, author, description, publisher, cover_url) values(?, ?, ?, ?, ?, ?, ?);', data, function (err, rows, fields) {
+                        if (!err){
+                            ret.push(data);
+                            console.log('insert success.');
+                        } else{
+                            console.log('Error while performing Query.', err);
+                        }
+                        if (0 === --pending) {
+                            callback(blogs);
+                        }
+                    });
+                } else {
+                    ret.push(data);
+                    if (0 === --pending) {
+                        callback(ret);
+                    }
+                }
+            });
+
+        });
+        connection.end();
+    }).catch(function (ex) {
+        console.log('parsing failed', ex)
+    });
 });
 
 router.post('/:ownerId/:bookId', (req, res) => {
