@@ -1,11 +1,11 @@
 import express from "express";
 import 'isomorphic-fetch';
 import mysql from 'mysql';
+import config from '../../config/config';
 
 const router = express.Router();
 const err = false;
 const DAUM_BOOK_SEARCH_URL = "https://apis.daum.net/search/book";
-const APIKEY = "";
 
 
 router.get('/search', (req, res) => {
@@ -14,21 +14,15 @@ router.get('/search', (req, res) => {
         res.json(books);
     };
     
-    fetch(DAUM_BOOK_SEARCH_URL + "?output=json&apikey=" + APIKEY + "&q=" + req.query.q, {
+    fetch(DAUM_BOOK_SEARCH_URL + "?output=json&apikey=" + config.daum_api_key + "&q=" + req.query.q, {
         method: 'GET',
     }).then(function (response) {
         return response.json();
     }).then(function (json) {
 
         var items = json.channel.item;
-        var connection = mysql.createConnection({
-            host     : 'localhost',
-            user     : 'root',
-            password : '',
-            port     : '3306',
-            database : 'cowlib'
-        });
-
+        var connection = mysql.createConnection(config.mysql);
+        
         connection.connect();
 
         var ret =[];
