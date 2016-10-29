@@ -72,11 +72,20 @@ router.post('/:ownerId/:bookId', (req, res) => {
 });
 
 router.delete('/:ownerId/:bookId', (req, res) => {
-    // user_has_book 의 is_deleted true로 변경
-    if (!err)
-        res.sendStatus(200);
-    else
-        res.sendStatus(500);
+    var ownerId = req.params.ownerId;
+    var bookId = req.params.bookId;
+    var conditions = [ownerId, bookId];
+
+    var connection = mysql.createConnection(config.mysql);
+    connection.query('update user_has_book set is_deleted="T" where user_id=? and book_id=?;', conditions, function (err, rows, fields) {
+        if (!err){
+            console.log('update success.');
+            res.sendStatus(200);
+        } else{
+            console.log('Error while performing Query.', err);
+            res.sendStatus(500);
+        }
+    });
 });
 
 
