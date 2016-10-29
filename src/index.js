@@ -1,21 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import Library from './section/Library';
+import Main from './section/Main';
 
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
 
 let rootElement = document.getElementById('root');
-
-const Message = React.createClass({
-    render() {
-        return <h3>example</h3>
-    }
-});
 
 ReactDOM.render((
     <Router history = {browserHistory}>
         <Route path="/" component={App}>
-            <Route path="user" component={Message}/>
+            <IndexRoute component={Main} />
+            <Route path="hello" component={Library}/>
         </Route>
     </Router>
 ), rootElement);
