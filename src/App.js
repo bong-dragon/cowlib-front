@@ -52,6 +52,9 @@ export default class App extends React.Component {
                 <Row>
                     {newbook}
                 </Row>
+                <div className="detail">
+                    {this.props.children}
+                </div>
             </Grid>
         )
     }

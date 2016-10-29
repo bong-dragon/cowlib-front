@@ -6,6 +6,7 @@ import pasportconfig from '../config/passport';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 
+
 const app = express();
 const port = 3000;
 const devPort = 3001;
@@ -35,7 +36,16 @@ import auth from './routes/auth';
 
 app.use('/books', books);
 app.use('/auth', auth);
-
+app.get('*', function (request, response){
+    var options = {
+        root: __dirname + '/../public'
+    };
+    response.sendfile('index.html', options, function (err) {
+        if(err){
+            console.log(err);
+        }
+    });
+});
 const server = app.listen(port, () => {
     console.log('Express listening on port', port);
 });
