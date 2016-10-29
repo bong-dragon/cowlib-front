@@ -10,11 +10,11 @@ const DAUM_BOOK_SEARCH_URL = "https://apis.daum.net/search/book";
 
 router.get('/search', (req, res) => {
 
-    var callback = function(books, connection) {
+    var callback = function (books, connection) {
         connection.end();
         res.json(books);
     };
-    
+
     fetch(DAUM_BOOK_SEARCH_URL + "?output=json&apikey=" + config.daum_api_key + "&q=" + req.query.q, {
         method: 'GET',
     }).then(function (response) {
@@ -23,13 +23,13 @@ router.get('/search', (req, res) => {
 
         var items = json.channel.item;
         var connection = mysql.createConnection(config.mysql);
-        
+
         connection.connect();
 
-        var results =[];
+        var results = [];
         var pending = items.length;
 
-        items.forEach(function(item, idx){
+        items.forEach(function (item, idx) {
 
             var data = [item.isbn, item.isbn13, item.title, item.author, item.description, item.pub_nm, item.cover_l_url];
             var isbns = [item.isbn, item.isbn13];
@@ -38,10 +38,10 @@ router.get('/search', (req, res) => {
             connection.query('select * from book where isbn=? or isbn13=?;', isbns, function (err, rows, fields) {
                 if (rows.length == 0) {
                     connection.query('insert into book (isbn, isbn13, title, author, description, publisher, cover_url) values(?, ?, ?, ?, ?, ?, ?);', data, function (err, rows, fields) {
-                        if (!err){
+                        if (!err) {
                             results.push(data);
                             console.log('insert success.');
-                        } else{
+                        } else {
                             console.log('Error while performing Query.', err);
                         }
                         if (0 === --pending) {
@@ -64,11 +64,20 @@ router.get('/search', (req, res) => {
 });
 
 router.post('/:ownerId/:bookId', (req, res) => {
-    // user_has_book 에 추가
-    if (!err)
-        res.sendStatus(200);
-    else
-        res.sendStatus(500);
+    var ownerId = req.params.ownerId;
+    var bookId = req.params.bookId;
+
+    var conditions = [parseInt(ownerId), parseInt(bookId)];
+    var connection = mysql.createConnection(config.mysql);
+    connection.query('insert into user_has_book values(DEFAULT, ?, ?, "false");', conditions, function (err, rows, fields) {
+        if (!err) {
+            console.log('update success.');
+            res.sendStatus(200);
+        } else {
+            console.log('Error while performing Query.', err);
+            res.sendStatus(500);
+        }
+    });
 });
 
 router.delete('/:ownerId/:bookId', (req, res) => {
@@ -78,10 +87,10 @@ router.delete('/:ownerId/:bookId', (req, res) => {
 
     var connection = mysql.createConnection(config.mysql);
     connection.query('update user_has_book set is_deleted="T" where user_id=? and book_id=?;', conditions, function (err, rows, fields) {
-        if (!err){
+        if (!err) {
             console.log('update success.');
             res.sendStatus(200);
-        } else{
+        } else {
             console.log('Error while performing Query.', err);
             res.sendStatus(500);
         }
