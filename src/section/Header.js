@@ -1,10 +1,12 @@
 import React from 'react';
 import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import 'whatwg-fetch';
+import Auth from '../util/Auth';
+import {connect} from 'react-redux';
 
 
-export default class Header extends React.Component {
-
+class Header extends React.Component {
+    
     constructor() {
         super();
         this.state = {
@@ -12,9 +14,32 @@ export default class Header extends React.Component {
     }
 
     render() {
+        // var loginButton = <Button type="button" onClick={this.handleLogin.bind(this)}>로그인</Button>
+        // var logoutButton = <Button type="button" onClick={this.handleLogout.bind(this)}>로그아웃</Button>
+        // var button = this.props.loggedIn? logoutButton: loginButton;
+        // {loginButton}
         return (
-            <div>헤더다 헤더
+            <div>
+                <Auth></Auth>
             </div>
         )
     }
+    //
+    // handleLogin() {
+    //     Auth.login();
+    // }
+    //
+    // handleLogout() {
+    //     Auth.logout();
+    // }
 }
+
+let mapStateToProps = (state) => {
+    return {
+        user_id: state.auth.id
+    };
+};
+
+Header = connect(mapStateToProps)(Header);
+
+export default Header;

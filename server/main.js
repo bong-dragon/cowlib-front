@@ -40,7 +40,7 @@ app.get('*', function (request, response){
     var options = {
         root: __dirname + '/../public'
     };
-    response.sendfile('index.html', options, function (err) {
+    response.sendFile('index.html', options, function (err) {
         if(err){
             console.log(err);
         }

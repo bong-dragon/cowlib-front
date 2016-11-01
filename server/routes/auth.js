@@ -2,30 +2,67 @@ import express from 'express';
 import passport from 'passport';
 import mysql from 'mysql';
 import config from '../../config/config';
+import 'isomorphic-fetch';
 
 
 const router = express.Router();
 
 router.get('/success', isLoggedIn, (req, res) => {
 
-    var connection = mysql.createConnection(config.mysql);
+    var callback = function (connection) {
+        connection.end();
+        var options = {
+            root: __dirname + '/../../public'
+        };
+        res.sendFile('success.html', options, function (err) {
+            if(err){
+                console.log(err);
+            }
+        });
+    };
+    var connection1 = mysql.createConnection(config.mysql);
 
-    connection.connect();
+    connection1.connect();
+
+    let user_id = req.user.id;
+    let photo = req.user.photos[0].value;
+    let name = req.user.displayName;
+
+    fetch("http://localhost:8080?" + config.daum_api_key + "&q=" + req.query.q, {
+        method: 'POST',
+    }).then(function (response) {
+        return response.json();
+    }).then(function (json) {
+
+    console.log("user:id:"+user_id);
+    console.log("user:id:"+photo);
+    console.log("user:id:"+name);
 
 
-    connection.query('select * from user where facebook_id=?;', req.user.id, function (err, rows, fields) {
-        if (rows.length == 0) {
-            connection.query('insert into user values(default, ?, ?, ?, "false");', 
-                req.user.id, req.user.photos[0].value, req.user.displayName, function (err, rows, fields) {
-                if (err) {
-                    console.log("fail" + err);
-                }
-            });
-        }
-    });
-    connection.end();
 
-    res.redirect('/books/' + req.user.id);
+
+    //
+    // connection1.query('select * from user where facebook_id=?;', user_id, function (err, rows, fields) {
+    //     console.log("1***************************************")
+    //     console.log(connection1);
+    //     if (rows.length == 0) {
+    //         console.log("2***************************************")
+    //         console.log(connection1);
+    //         var connection2 = mysql.createConnection(config.mysql);
+    //
+    //         connection2.query('insert into user values(default, ?, ?, ?, "false");',
+    //             user_id, photo, name, function (err, rows, fields) {
+    //             if (err) {
+    //                 console.log("fail" + err);
+    //             }
+    //                 // callback(connection);
+    //         });
+    //     } else {
+    //         // callback(connection);
+    //     }
+    // });
+
+
 });
 
 router.get('/fail', isLoggedIn, (req, res) => {

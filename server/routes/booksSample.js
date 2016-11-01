@@ -7,7 +7,6 @@ const router = express.Router();
 const err = false;
 const DAUM_BOOK_SEARCH_URL = "https://apis.daum.net/search/book";
 
-
 router.get('/search', (req, res) => {
 
     var callback = function (books, connection) {
