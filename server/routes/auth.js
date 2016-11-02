@@ -9,8 +9,7 @@ const router = express.Router();
 
 router.get('/success', isLoggedIn, (req, res) => {
 
-    var callback = function (connection) {
-        connection.end();
+    var callback = function () {
         var options = {
             root: __dirname + '/../../public'
         };
@@ -20,48 +19,20 @@ router.get('/success', isLoggedIn, (req, res) => {
             }
         });
     };
-    var connection1 = mysql.createConnection(config.mysql);
-
-    connection1.connect();
 
     let user_id = req.user.id;
     let photo = req.user.photos[0].value;
     let name = req.user.displayName;
 
-    fetch("http://localhost:8080?" + config.daum_api_key + "&q=" + req.query.q, {
+    fetch(`http://localhost:8080/auth?facebookId=${user_id}&profile=${photo}&name=${name}`, {
         method: 'POST',
     }).then(function (response) {
         return response.json();
     }).then(function (json) {
-
-    console.log("user:id:"+user_id);
-    console.log("user:id:"+photo);
-    console.log("user:id:"+name);
-
-
-
-
-    //
-    // connection1.query('select * from user where facebook_id=?;', user_id, function (err, rows, fields) {
-    //     console.log("1***************************************")
-    //     console.log(connection1);
-    //     if (rows.length == 0) {
-    //         console.log("2***************************************")
-    //         console.log(connection1);
-    //         var connection2 = mysql.createConnection(config.mysql);
-    //
-    //         connection2.query('insert into user values(default, ?, ?, ?, "false");',
-    //             user_id, photo, name, function (err, rows, fields) {
-    //             if (err) {
-    //                 console.log("fail" + err);
-    //             }
-    //                 // callback(connection);
-    //         });
-    //     } else {
-    //         // callback(connection);
-    //     }
-    // });
-
+        callback();
+    }).catch(function (ex) {
+        console.log('parsing failed', ex)
+    });
 
 });
 
