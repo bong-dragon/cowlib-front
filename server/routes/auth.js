@@ -10,6 +10,7 @@ const router = express.Router();
 router.get('/success', isLoggedIn, (req, res) => {
 
     var callback = function () {
+
         var options = {
             root: __dirname + '/../../public'
         };
@@ -29,6 +30,7 @@ router.get('/success', isLoggedIn, (req, res) => {
     }).then(function (response) {
         return response.json();
     }).then(function (json) {
+        res.cookie('cowlib-user', json);
         callback();
     }).catch(function (ex) {
         console.log('parsing failed', ex)
@@ -60,15 +62,7 @@ router.get('/logout', function (req, res) {
 
 router.get('/', (req, res) => {
     if (req.isAuthenticated()) {
-        //db에서 req.user.id 가지고 찾기
-        res.json({
-            id: 1234,
-            profile: "photo url",
-            name : "이경륜",
-            bookmark : [
-                1234123, 1231231
-            ]
-        })
+       res.json(req.cookies["cowlib-user"]);
     } else {
         res.statusCode(403);
     }

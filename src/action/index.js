@@ -31,6 +31,28 @@ export function login(value) {
     };
 }
 
+export function login(value) {
+
+    async function facebook () {
+        let response = await fetch('/auth/', {
+            method : 'get'
+        }).catch(function (err) {
+            console.log(err);
+        })
+        let body = await response.json();
+        // return body;
+        console.log(body);
+    }
+
+    // event handling
+    // return {
+    //     type: AUTH,
+    //     user_id: value + 1,
+    //     name: "",
+    //     profile: ""
+    // };
+}
+
 export function logout(value) {
 
     // event handling
