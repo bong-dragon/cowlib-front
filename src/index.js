@@ -17,7 +17,7 @@ ReactDOM.render((
         <Router history={browserHistory}>
             <Route path="/" component={App}>
                 <IndexRoute component={Main}/>
-                <Route path="hello" component={Library}/>
+                <Route path=":userId" component={Library}/>
             </Route>
         </Router>
     </Provider>

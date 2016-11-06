@@ -5,14 +5,6 @@ import 'whatwg-fetch';
 
 export default class Main extends React.Component {
 
-    constructor() {
-        super();
-
-        this.state = {
-            
-        }
-    }
-
     render() {
         return (
             <div>

@@ -1,24 +1,10 @@
 import React from 'react';
-import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import 'whatwg-fetch';
 import Header from './section/Header';
-import { isLogined } from './action';
+import { getAuthInfo } from './action';
 import { connect } from 'react-redux';
 
 class App extends React.Component {
-
-    constructor() {
-
-        super();
-        this.state = {}
-    }
-
-    //
-    // updateAuth(loggedIn) {
-    //     this.setState({
-    //         loggedIn: !!loggedIn
-    //     })
-    // }
 
     async componentWillMount() {
         let response = await fetch('/auth/', {
@@ -30,27 +16,27 @@ class App extends React.Component {
             console.log(err);
         })
         let body = await response.json();
-        this.props.getAuthInfo(body);
+        this.props.syncAuthInfo(body);
     }
 
     render() {
         return (
             <div>
-                <div>123123</div>
                 <Header/>
-
-                <div className="detail">
+                <section>
                     {this.props.children}
-                </div>
+                </section>
             </div>
         )
     }
 }
+
 let mapDispatchToProps = (dispatch) => {
     return {
-        getAuthInfo: (value) => dispatch(isLogined(value))
+        syncAuthInfo: (value) => dispatch(getAuthInfo(value))
     };
 };
+
 App = connect(null, mapDispatchToProps)(App);
 
 export default App;

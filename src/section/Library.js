@@ -47,7 +47,7 @@ export default class Library extends React.Component {
         return (
             <Grid>
                 <Row>
-                    <a href="/auth/facebook" class="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
+                    <div>{this.props.params.userId}</div>
                 </Row>
                 <Row>
                     {newbook}

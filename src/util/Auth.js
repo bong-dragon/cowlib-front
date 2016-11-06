@@ -1,50 +1,33 @@
 import React from 'react';
 import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import 'whatwg-fetch';
-// import Auth from '../util/Auth';
 import {login, logout} from '../action';
 import {connect} from 'react-redux';
 
 
 class Auth extends React.Component {
 
-    
-    constructor() {
-        super();
-        this.state = {
-            id : 0
-        }
-    }
-
     handleLogin(){
-        this.props.handleLogin(this.state.id);
+        this.props.handleLogin();
     }
 
     handleLogout(){
         this.props.handleLogout();
     }
-
-    increase(){
-        this.setState({
-            id: ++this.state.id
-        });    
-    }
     
     render() {
         var loginButton = <Button type="button" onClick={this.handleLogin.bind(this)}>로그인</Button>
-        var incButton = <Button type="button" onClick={this.increase.bind(this)}>숫자올리기</Button>
         var logoutButton = <Button type="button" onClick={this.handleLogout.bind(this)}>로그아웃</Button>
-
-
-        // var logoutButton = <Button type="button" onClick={this.handleLogout.bind(this)}>로그아웃</Button>
         var button = !!this.props.user_id? logoutButton: loginButton;
 
         return (
             <div>
                 {button}
-                {incButton}
-                <div>{this.state.id}</div>
                 <div>{this.props.user_id}</div>
+                <div>{this.props.facebook_id}</div>
+                <div>{this.props.profile}</div>
+                <div>{this.props.name}</div>
+
             </div>
         )
     }
@@ -52,7 +35,7 @@ class Auth extends React.Component {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        handleLogin: (value) => dispatch(login(value)),
+        handleLogin: () => dispatch(login()),
         handleLogout: () => dispatch(logout())
     };
 };
@@ -60,7 +43,10 @@ let mapDispatchToProps = (dispatch) => {
 
 let mapStateToProps = (state) => {
     return {
-        user_id: state.auth.user_id
+        user_id: state.auth.user_id,
+        facebook_id: state.auth.facebook_id,
+        profile: state.auth.profile,
+        name: state.auth.name
     };
 };
 
