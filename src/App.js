@@ -2,16 +2,17 @@ import React from 'react';
 import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import 'whatwg-fetch';
 import Header from './section/Header';
-// import Auth from './util/Auth';
+import { isLogined } from './action';
+import { connect } from 'react-redux';
 
-export default class App extends React.Component {
-    //
-    // constructor() {
-    //     super();
-    //     this.state = {
-    //         loggedIn: Auth.loggedIn()
-    //     }
-    // }
+class App extends React.Component {
+
+    constructor() {
+
+        super();
+        this.state = {}
+    }
+
     //
     // updateAuth(loggedIn) {
     //     this.setState({
@@ -19,16 +20,24 @@ export default class App extends React.Component {
     //     })
     // }
 
-    // componentWillMount() {
-    //     Auth.onChange = this.updateAuth.bind(this);
-    // }
-    // <Header loggedIn={this.state.loggedIn}/>
-    
+    async componentWillMount() {
+        let response = await fetch('/auth/', {
+            credentials: 'include',
+            method: 'get'
+        }).catch(function (err) {
+
+            console.log("we got erreo");
+            console.log(err);
+        })
+        let body = await response.json();
+        this.props.getAuthInfo(body);
+    }
+
     render() {
         return (
             <div>
                 <div>123123</div>
-               <Header/>
+                <Header/>
 
                 <div className="detail">
                     {this.props.children}
@@ -37,3 +46,11 @@ export default class App extends React.Component {
         )
     }
 }
+let mapDispatchToProps = (dispatch) => {
+    return {
+        getAuthInfo: (value) => dispatch(isLogined(value))
+    };
+};
+App = connect(null, mapDispatchToProps)(App);
+
+export default App;

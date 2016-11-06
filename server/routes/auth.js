@@ -61,11 +61,7 @@ router.get('/logout', function (req, res) {
 });
 
 router.get('/', (req, res) => {
-    if (req.isAuthenticated()) {
-       res.json(req.cookies["cowlib-user"]);
-    } else {
-        res.statusCode(403);
-    }
+    res.json(req.cookies["cowlib-user"]);
 });
 
 
