@@ -8,7 +8,7 @@ export default class Main extends React.Component {
     render() {
         return (
             <div>
-              메인이다 메인
+                <img src="/img/guide.png" alt="가이드페이지"/>
             </div>
         )
     }
