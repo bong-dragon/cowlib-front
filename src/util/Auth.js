@@ -18,16 +18,13 @@ class Auth extends React.Component {
     render() {
         var loginButton = <Button type="button" onClick={this.handleLogin.bind(this)}>로그인</Button>
         var logoutButton = <Button type="button" onClick={this.handleLogout.bind(this)}>로그아웃</Button>
-        var button = !!this.props.user_id? logoutButton: loginButton;
+        var myLibrary = "/"+ this.props.user_id;
+        var myLibraryButton = <a href={myLibrary}>내도서관<img className="profile" src={this.props.profile} alt="profile" /></a>
+        var button = !!this.props.user_id? myLibraryButton: loginButton;
 
         return (
-            <div>
+            <div className="auth">
                 {button}
-                <div>{this.props.user_id}</div>
-                <div>{this.props.facebook_id}</div>
-                <div>{this.props.profile}</div>
-                <div>{this.props.name}</div>
-
             </div>
         )
     }

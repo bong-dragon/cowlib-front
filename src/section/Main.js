@@ -7,9 +7,9 @@ export default class Main extends React.Component {
 
     render() {
         return (
-            <div>
-                <img src="/img/guide.png" alt="가이드페이지"/>
-            </div>
+            <section>
+                <img className="guide" src="/img/guide.png" alt="가이드페이지"/>
+            </section>
         )
     }
 }

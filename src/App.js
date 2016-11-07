@@ -23,9 +23,7 @@ class App extends React.Component {
         return (
             <div>
                 <Header/>
-                <section>
-                    {this.props.children}
-                </section>
+                {this.props.children}
             </div>
         )
     }
