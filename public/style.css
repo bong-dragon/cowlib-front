@@ -1,3 +1,7 @@
+ul {
+	padding: 0;
+	list-style: none;
+}
 body {
 	font-size: 46px;
 }
@@ -65,4 +69,13 @@ section {
 
 section .guide {
 	width: 100%;
+}
+
+section .books li{
+	margin: 34px;
+	box-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+}
+
+section .books li .info {
+	float: right;
 }

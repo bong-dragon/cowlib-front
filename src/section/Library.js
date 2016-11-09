@@ -1,8 +1,97 @@
 import React from 'react';
 import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
+import OwnerBook from './library/OwnerBook'
 import 'whatwg-fetch';
 
+var booksSample = [{
+        id: 123123,
+        title: "콩고",
+        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+        cover_l_url: "/img/test1.jpeg",
+        borrow: {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        },
+        wait_list: [
+            {
+                id: 1234,
+                profile: "",
+                name: "이경륜"
+            }, {
+                id: 1234,
+                profile: "",
+                name: "이경륜"
+            }
+        ]
 
+    }, {
+        id: 123123,
+        title: "콩고",
+        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+        cover_l_url: "/img/test2.jpeg",
+        borrow: {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        },
+        wait_list: [
+            {
+                id: 1234,
+                profile: "/img/basic_profile.png",
+                name: "이경륜"
+            }, {
+                id: 1234,
+                profile: "/img/basic_profile.png",
+                name: "이경륜"
+            }
+        ]
+
+    }, {
+        id: 123123,
+        title: "콩고",
+        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+        cover_l_url: "/img/test3.jpeg",
+        borrow: {
+            id: 1234,
+            profile: "/img/basic_profile.png",
+            name: "이경륜"
+        },
+        wait_list: [
+            {
+                id: 1234,
+                profile: "/img/basic_profile.png",
+                name: "이경륜"
+            }, {
+                id: 1234,
+                profile: "/img/basic_profile.png",
+                name: "이경륜"
+            }
+        ]
+
+    }, {
+        id: 123123,
+        title: "콩고",
+        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+        cover_l_url: "/img/test2.jpeg",
+        borrow: {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        },
+        wait_list: [
+            {
+                id: 1234,
+                profile: "",
+                name: "이경륜"
+            }, {
+                id: 1234,
+                profile: "",
+                name: "이경륜"
+            }
+        ]
+
+    }];
 export default class Library extends React.Component {
 
     constructor() {
@@ -26,32 +115,26 @@ export default class Library extends React.Component {
         });
 
     }
+    renderWaitList(wait_list) {
+        return "list"
+    }
 
     render() {
         var books = this.state.books;
-        var newbook = books.map(function (book, i) {
-            return (
-                <Col xs={6} md={4}>
-                    <Thumbnail src={book.cover_url} alt="242x200">
-                        <h3>Thumbnail label</h3>
-                        <p>Description</p>
-                        <p>
-                            <Button bsStyle="primary">Button</Button>&nbsp;
-                            <Button bsStyle="default">Button</Button>
-                        </p>
-                    </Thumbnail>
-                </Col>
-            )
+        var no_borrow = "없음";
+        var no_waitlist = "없음";
 
+        var newbook = booksSample.map(function (book, i) {
+            return <OwnerBook book={book}/>
         });
         return (
             <section>
                 <div className="">
                     <a href="#">추가하기</a>
                 </div>
-                <div>
+                <ul className="books">
                      {newbook}
-                </div>
+                </ul>
             </section>
         )
     }
