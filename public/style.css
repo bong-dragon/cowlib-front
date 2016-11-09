@@ -2,29 +2,61 @@ body {
 	font-size: 46px;
 }
 
-
-
 .profile {
 	border: 1px;
-    border-radius: 50px;
+	border-radius: 50px;
 }
 
 header {
 	/*background: #eee;*/
-	width:100%;
+	box-shadow: 0 2px 30px rgba(0, 0, 0, 0.5);
+	width: 100%;
 	position: absolute;
 }
 
-header .title{
+header .title {
+	margin-top: 6px;
+	margin-left: 50px;
 	float: left;
-	font-size: 120px;
+	font-size: 100px;
 }
+
+header .title img {
+	padding-bottom: 25px;
+	padding-right: 14px;
+}
+
 header a {
 	color: #000;
 }
 
 header .auth {
+	padding-top: 6px;
 	float: right;
+	font-size: 50px;
+	padding-right: 20px;
+}
+
+header .auth button {
+	border-radius: 17px;
+	padding: 3px 25px;
+	margin: 10px;
+	background-color: #365899;
+	color: #fff;
+	font-size: 44px;
+}
+
+header .auth a {
+	display: block;
+	border-radius: 17px;
+	padding: 3px 25px;
+	margin: 10px;
+	font-size: 44px;
+}
+
+header .auth img{
+	padding: 12px;
+	width:100px;
 }
 
 section {
@@ -32,5 +64,5 @@ section {
 }
 
 section .guide {
-	width:100%;
+	width: 100%;
 }

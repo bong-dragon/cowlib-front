@@ -45,17 +45,14 @@ export default class Library extends React.Component {
 
         });
         return (
-            <Grid>
-                <Row>
-                    <div>{this.props.params.userId}</div>
-                </Row>
-                <Row>
-                    {newbook}
-                </Row>
-                <div className="detail">
-                    {this.props.children}
+            <section>
+                <div className="">
+                    <a href="#">추가하기</a>
                 </div>
-            </Grid>
+                <div>
+                     {newbook}
+                </div>
+            </section>
         )
     }
     

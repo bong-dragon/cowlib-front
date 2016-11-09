@@ -10,7 +10,10 @@ export default class Header extends React.Component {
     render() {
         return (
             <header>
-                <div className="title"><a href="/">소도서관</a></div>
+                <div className="title"><a href="/">
+                    <img src="/img/logo_small.png" alt="cowlib"/>
+                    <span>소도서관</span>
+                </a></div>
                 <Auth></Auth>
             </header>
         )
