@@ -7,7 +7,7 @@ export default class OwnerBook extends React.Component {
     		return (<p><span>{waiter.name}</span><img className="profile" src={waiter.profile} /></p>)
     	})
         return (<li>
-                    <img src={book.cover_l_url} alt={book.title}/>
+                    <img className="book_img" src={book.cover_l_url} alt={book.title}/>
                     <div className="info">
                         <p>제목 : {book.title}</p>
                         <p>빌려간사람 : {book.borrow.name? book.borrow.name:no_borrow}</p>
