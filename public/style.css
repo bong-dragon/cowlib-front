@@ -1,6 +1,5 @@
 body {
 	max-width: 600px;
-	overflow: hidden;
 }
 ul {
 	padding: 0;
@@ -79,5 +78,19 @@ section .books li .info {
 }
 
 section .books li .book_img {
-	height: 130px;
+	float: left;
+	overflow: hidden;
+	width: 45%;
+	min-width: 100px;
+	min-height: 150px;
+	/*width: 90px;*/
+	/*height: 130px;*/
+	/*tex*/
+	/*vertical-align: middle;*/
+}
+section .books li .book_img  img{
+	max-height: 160px;
+	max-width: 120px;
+	 /*max-height: 92%; */
+	 /*max-width: 92%; */
 }
