@@ -2,6 +2,7 @@ import React from 'react';
 import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import OwnerBook from './library/OwnerBook'
 import 'whatwg-fetch';
+import {Link} from 'react-router';
 
 var booksSample = [{
         id: 123123,
@@ -130,7 +131,10 @@ export default class Library extends React.Component {
         return (
             <section>
                 <div className="">
-                    <a href="#">추가하기</a>
+                    <Link to={{
+                        pathname: '/search',
+                       state: { modal: true, returnTo: this.props.location.pathname }
+                    }}>추가하기</Link>
                 </div>
                 <ul className="books">
                      {newbook}
