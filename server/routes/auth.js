@@ -25,7 +25,7 @@ router.get('/success', isLoggedIn, (req, res) => {
     let photo = req.user.photos[0].value;
     let name = req.user.displayName;
 
-    fetch(`http://localhost:8080/auth?facebookId=${user_id}&profile=${photo}&name=${name}`, {
+    fetch(`http://localhost:8080/v1/auth?facebookId=${user_id}&profile=${photo}&name=${name}`, {
         method: 'POST',
     }).then(function (response) {
         return response.json();

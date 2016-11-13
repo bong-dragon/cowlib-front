@@ -4,94 +4,174 @@ import OwnerBook from './library/OwnerBook'
 import 'whatwg-fetch';
 
 var booksSample = [{
-        id: 123123,
-        title: "콩고",
-        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
-        cover_l_url: "/img/test1.jpeg",
-        borrow: {
+    id: 123123,
+    title: "콩고",
+    link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+    cover_l_url: "/img/test1.jpeg",
+    author: "이경륜",
+    publisher: "jb출판",
+    borrow: {
+        id: 1234,
+        profile: "",
+        name: "이경륜"
+    },
+    wait_list: [
+        {
             id: 1234,
             profile: "",
             name: "이경륜"
-        },
-        wait_list: [
-            {
-                id: 1234,
-                profile: "",
-                name: "이경륜"
-            }, {
-                id: 1234,
-                profile: "",
-                name: "이경륜"
-            }
-        ]
-
-    }, {
-        id: 123123,
-        title: "콩고",
-        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
-        cover_l_url: "/img/test2.jpeg",
-        borrow: {
+        }, {
             id: 1234,
             profile: "",
             name: "이경륜"
-        },
-        wait_list: [
-            {
-                id: 1234,
-                profile: "/img/basic_profile.png",
-                name: "이경륜"
-            }, {
-                id: 1234,
-                profile: "/img/basic_profile.png",
-                name: "이경륜"
-            }
-        ]
+        }
+    ]
 
-    }, {
-        id: 123123,
-        title: "콩고",
-        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
-        cover_l_url: "/img/test3.jpeg",
-        borrow: {
+}, {
+    id: 123123,
+    title: "콩고",
+    link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+    cover_l_url: "/img/test2.jpeg",
+    author: "이경륜",
+    publisher: "jb출판",
+    borrow: {
+        id: 1234,
+        profile: "",
+        name: "이경륜"
+    },
+    wait_list: [
+        {
             id: 1234,
             profile: "/img/basic_profile.png",
             name: "이경륜"
-        },
-        wait_list: [
-            {
-                id: 1234,
-                profile: "/img/basic_profile.png",
-                name: "이경륜"
-            }, {
-                id: 1234,
-                profile: "/img/basic_profile.png",
-                name: "이경륜"
-            }
-        ]
+        }, {
+            id: 1234,
+            profile: "/img/basic_profile.png",
+            name: "이경륜"
+        }
+    ]
 
-    }, {
-        id: 123123,
-        title: "콩고",
-        link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
-        cover_l_url: "/img/test2.jpeg",
-        borrow: {
+}, {
+    id: 123123,
+    title: "콩고",
+    link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+    cover_l_url: "/img/test3.jpeg",
+    author: "이경륜",
+    publisher: "jb출판",
+    borrow: {
+        id: 1234,
+        profile: "/img/basic_profile.png",
+        name: "이경륜"
+    },
+    wait_list: [
+        {
+            id: 1234,
+            profile: "/img/basic_profile.png",
+            name: "이경륜"
+        }, {
+            id: 1234,
+            profile: "/img/basic_profile.png",
+            name: "이경륜"
+        }
+    ]
+
+}, {
+    id: 123123,
+    title: "콩고",
+    link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+    cover_l_url: "/img/test2.jpeg",
+    author: "이경륜",
+    publisher: "jb출판",
+    borrow: {
+        id: 1234,
+        profile: "",
+        name: "이경륜"
+    },
+    wait_list: [
+        {
             id: 1234,
             profile: "",
             name: "이경륜"
-        },
-        wait_list: [
-            {
-                id: 1234,
-                profile: "",
-                name: "이경륜"
-            }, {
-                id: 1234,
-                profile: "",
-                name: "이경륜"
-            }
-        ]
+        }, {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        }
+    ]
 
-    }];
+}, {
+    id: 123123,
+    title: "콩고",
+    link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+    cover_l_url: "/img/test6.png",
+    author: "이경륜",
+    publisher: "jb출판",
+    borrow: {
+        id: 1234,
+        profile: "",
+        name: "이경륜"
+    },
+    wait_list: [
+        {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        }, {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        }
+    ]
+
+}, {
+    id: 123123,
+    title: "콩고",
+    link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+    cover_l_url: "/img/test5.png",
+    author: "이경륜",
+    publisher: "jb출판",
+    borrow: {
+        id: 1234,
+        profile: "",
+        name: "이경륜"
+    },
+    wait_list: [
+        {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        }, {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        }
+    ]
+
+}, {
+    id: 123123,
+    title: "콩고",
+    link: "http://book.daum.net/detail/book.do?bookid=BOK0001631788811",
+    cover_l_url: "/img/test4.png",
+    author: "이경륜",
+    publisher: "jb출판",
+    borrow: {
+        id: 1234,
+        profile: "",
+        name: "이경륜"
+    },
+    wait_list: [
+        {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        }, {
+            id: 1234,
+            profile: "",
+            name: "이경륜"
+        }
+    ]
+
+}];
 export default class Library extends React.Component {
 
     constructor() {
@@ -115,6 +195,7 @@ export default class Library extends React.Component {
         });
 
     }
+
     renderWaitList(wait_list) {
         return "list"
     }
@@ -133,11 +214,11 @@ export default class Library extends React.Component {
                     <a href="#">추가하기</a>
                 </div>
                 <ul className="books">
-                     {newbook}
+                    {newbook}
                 </ul>
             </section>
         )
     }
-    
-    
+
+
 }

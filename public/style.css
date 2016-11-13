@@ -6,6 +6,10 @@ ul {
 	list-style: none;
 }
 
+p {
+	margin: 0;
+}
+
 .profile {
 	width: 30px;
 	border: 1px;
@@ -70,23 +74,28 @@ section .guide {
 section .books li{
 	overflow: hidden;
 	margin: 10px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 section .books li .info {
-	float: right;
+	float: left;
+	padding-left: 20px;
+	line-height: 24px;
 }
+
+section .books li .book_title {
+	color: #3774B1;
+	font-weight: bold;
+	font-size: 16px;
+}
+
 
 section .books li .book_img {
 	float: left;
+	width: 120px;
+	height: auto;
 	overflow: hidden;
-	width: 45%;
-	min-width: 100px;
-	min-height: 150px;
-	/*width: 90px;*/
-	/*height: 130px;*/
-	/*tex*/
-	/*vertical-align: middle;*/
+	background-size: contain;
+	background-position: center center;
 }
 section .books li .book_img  img{
 	max-height: 160px;
