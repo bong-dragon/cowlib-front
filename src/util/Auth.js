@@ -3,6 +3,7 @@ import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap'
 import 'whatwg-fetch';
 import {login, logout} from '../action';
 import {connect} from 'react-redux';
+import {Link} from 'react-router';
 
 
 class Auth extends React.Component {
@@ -21,12 +22,12 @@ class Auth extends React.Component {
 
         var loginButton = <button onClick={this.handleLogin.bind(this)}><img src="/img/facebook.png"></img><span>로그인</span></button>
         var logoutButton = <button onClick={this.handleLogout.bind(this)}><span>로그아웃</span></button>
-        var myLibraryButton = <a href={myLibrary}><img className="profile" src={profile} alt="profile" /><span>내도서관</span></a>
-        var button = !!this.props.user_id? myLibraryButton: loginButton;
+        var myLibraryButton = <Link to={myLibrary}><img className="profile" src={profile} alt="profile" /><span>내도서관</span></Link>
+        // var button = !!this.props.user_id? myLibraryButton: loginButton;
 
         return (
             <div className="auth">
-                {button}
+                {myLibraryButton}
             </div>
         )
     }

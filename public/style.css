@@ -10,6 +10,15 @@ p {
 	margin: 0;
 }
 
+input:focus {
+	outline:0;
+}
+
+button:focus {
+	outline:0;
+}
+
+
 .profile {
 	width: 30px;
 	border: 1px;
@@ -102,4 +111,31 @@ section .books li .book_img  img{
 	max-width: 120px;
 	 /*max-height: 92%; */
 	 /*max-width: 92%; */
+}
+
+section .searchContainer {
+	padding: 10px;
+	position: relative;
+}
+
+section .searchContainer input {
+	width: 100%;
+	padding: 7px;
+    border: 0;
+    background: #EEE;
+    border-radius: 10px;
+}
+
+section .searchContainer button {
+	border: none;
+	position: absolute;
+	width: 27px;
+	height: 27px;
+	top: 15px;
+	right: 14px;
+
+	background-color: Transparent;
+	background-size: 23px;
+	background-repeat:no-repeat;
+	background-image: url("/img/search_icon.png")
 }
