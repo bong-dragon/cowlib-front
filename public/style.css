@@ -87,6 +87,7 @@ section .books li{
 
 section .books li .info {
 	float: left;
+	width: 213px;
 	padding-left: 20px;
 	line-height: 24px;
 }
@@ -113,6 +114,11 @@ section .books li .book_img  img{
 	 /*max-width: 92%; */
 }
 
+section .books li .book_img_samll {
+	width: 67px;
+}
+
+
 section .searchContainer {
 	padding: 10px;
 	position: relative;
@@ -138,4 +144,19 @@ section .searchContainer button {
 	background-size: 23px;
 	background-repeat:no-repeat;
 	background-image: url("/img/search_icon.png")
+}
+
+section .searchResults {
+	padding: 10px;
+}
+
+.button {
+	background-color: #f0f0f0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.25em;
+    height: 2.5em;
+    line-height: 2.5;
+    margin: 0.25em;
+    padding: 0 1em;
+    width: 58%;
 }

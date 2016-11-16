@@ -33,9 +33,12 @@ app.use(express.static(__dirname + '/../public'));
 
 import books from './routes/booksSample';
 import auth from './routes/auth';
+import callNumber from './routes/callNumber';
 
 app.use('/v1/books', books);
 app.use('/auth', auth);
+app.use('/v1/libs', callNumber);
+
 app.get('*', function (request, response){
     var options = {
         root: __dirname + '/../public'
