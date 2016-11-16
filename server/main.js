@@ -34,7 +34,7 @@ app.use(express.static(__dirname + '/../public'));
 import books from './routes/booksSample';
 import auth from './routes/auth';
 
-app.use('/books', books);
+app.use('/v1/books', books);
 app.use('/auth', auth);
 app.get('*', function (request, response){
     var options = {

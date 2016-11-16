@@ -11,7 +11,7 @@ export default class OwnerBook extends React.Component {
                         <img className="book_img" src={book.cover_l_url} alt={book.title} />
                     </div>
                     <div className="info">
-                        <p className="book_title">{book.title}</p>
+                        <p dangerouslySetInnerHTML={{__html: book.title}} className="book_title" />
                         <p><span>{book.author}</span> | <span>{book.publisher}</span></p>
                         <p>읽고있어요 : {book.borrow.name? book.borrow.name:no_borrow}</p>
                         <ul>읽고싶어요 : {wait_list}</ul>

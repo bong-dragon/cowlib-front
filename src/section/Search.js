@@ -6,48 +6,57 @@ export default class Search extends React.Component {
 
 	constructor(props) {
 	    super(props);
-	    this.state = {value: ''};
+	    this.state = {
+            q: '',
+            search_list: []
+        };
 	}
 
 	handleChange(e) {
-		this.setState({value: event.target.value});
+		this.setState({q: e.target.value});
 	} 
 
-	handleSubmit(e) {
+	async handleSubmit(e) {
 		e.preventDefault();
-		let response = await fetch('/auth/', {
-		    credentials: 'include',
-		    method: 'get'
-		}).catch(function (err) {
+        let q = this.state.q;
+        console.log(q);
 
-		    console.log("we got erreo");
-		    console.log(err);
-		})
-		let body = await response.json();
-		console.log(body);
+
+        let response = await fetch(`/v1/books/search/?q=${q}`, {
+            credentials: 'include',
+            method: 'get'
+        }).catch(function (err) {
+            console.log("we got erreo");
+            console.log(err);
+        })
+        let body = await response.json();
+        console.log(body);
+        this.setState({search_list: body});
 	}
 
     render() {
+       
+
+        var search_list = !!this.state.search_list.length?this.state.search_list.map(function (book, i) {
+            var title = book.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            return (<li dangerouslySetInnerHTML={{__html: title}}></li>)
+        }): (<li>검색 결과가 없습니다.</li>);
+
         return (
             <section>
             	<div className="searchContainer">
-            		<form onSubmit={this.handleSubmit}>
+            		<form onSubmit={this.handleSubmit.bind(this)}>
             		<input 
             			type="text" 
             			placeholder="검색" 
-            			value={this.state.value} 
+            			value={this.state.q} 
             			onChange={this.handleChange.bind(this)}
             		/>
             		<button></button>
             		</form>
             	</div>
             	<ul>
-            		<li>새책!!!</li>
-            		<li>새책!!!</li>
-            		<li>새책!!!</li>
-            		<li>새책!!!</li>
-            		<li>새책!!!</li>
-            		<li>새책!!!</li>
+                    {search_list}
             	</ul>
             </section>
         )
