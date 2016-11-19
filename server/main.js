@@ -31,13 +31,11 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/../public'));
 
 
-import books from './routes/booksSample';
 import auth from './routes/auth';
-import callNumber from './routes/callNumber';
+import v1 from './routes/v1';
 
-app.use('/v1/books', books);
 app.use('/auth', auth);
-app.use('/v1/libs', callNumber);
+app.use('/v1/', v1);
 
 app.get('*', function (request, response){
     var options = {
@@ -48,7 +46,10 @@ app.get('*', function (request, response){
             console.log(err);
         }
     });
+
+    //response.redirect('/')
 });
+
 const server = app.listen(port, () => {
     console.log('Express listening on port', port);
 });

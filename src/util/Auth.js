@@ -1,15 +1,18 @@
 import React from 'react';
 import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import 'whatwg-fetch';
-import {login, logout} from '../action';
+import {logout} from '../action';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
 
 
 class Auth extends React.Component {
 
-    handleLogin(){
-        this.props.handleLogin();
+    handleLogin() {
+        var URL = "/auth/facebook";
+        var title = "페이스북";
+        var status = "scrollbars=no, status=no;";
+        window.open(URL, title, status);
     }
 
     handleLogout(){
@@ -35,11 +38,9 @@ class Auth extends React.Component {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        handleLogin: () => dispatch(login()),
         handleLogout: () => dispatch(logout())
     };
 };
-
 
 let mapStateToProps = (state) => {
     return {

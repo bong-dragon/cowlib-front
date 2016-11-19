@@ -1,8 +1,9 @@
 import React from 'react';
 import 'whatwg-fetch';
 
+import {connect} from 'react-redux';
 
-export default class Search extends React.Component {
+class Search extends React.Component {
 
     constructor(props) {
         super(props);
@@ -17,30 +18,36 @@ export default class Search extends React.Component {
     }
 
     handleAddCallNumber(isbn) {
-        this.state.search_list.forEach(function (book) {
+        let search_list = this.state.search_list;
+        search_list.forEach(function (book) {
             if (book.isbn == isbn) {
-                let ownerId = "1242";
-                fetch(`/v1/libs/${ownerId}/callNumber`, {
+                let ownerId = this.props.user_id;
+                let bookMetaId = book.id;
+                let url = `/v1/libs/${ownerId}/callNumber?bookMetaId=${bookMetaId}`;
+                fetch(url, {
                     credentials: 'include',
                     method: 'post'
                 }).then((response) => response.json())
                     .then((responseJson) => {
-                        console.log(responseJson);
+                        book.isInserted = true;
+                        this.setState({
+                            search_list: search_list
+                        })
                     })
                     .catch((error) => {
                         console.error(error);
                     });
             }
-        })
+        }.bind(this));
     }
 
     async handleSubmit(e) {
         e.preventDefault();
         let q = this.state.q;
         console.log(q);
+        this.props.profile
 
-
-        let response = await fetch(`/v1/books/search/?q=${q}`, {
+        let response = await fetch(`/v1/bookMetas/search/?q=${q}`, {
             credentials: 'include',
             method: 'get'
         }).catch(function (err) {
@@ -53,18 +60,18 @@ export default class Search extends React.Component {
     }
 
     render() {
-
-
         var search_list = !!this.state.search_list.length ? this.state.search_list.map(function (book, i) {
             var title = book.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            var book_img = book.coverUrl? book.coverUrl : '/img/basic_book.png';
+            var button = book.isInserted ? <span>이미 추가되었습니다</span> : <button className="button" onClick={this.handleAddCallNumber.bind(this, book.isbn)}>추가 하기</button>;
             return (<li key={book.isbn}>
                 <div className="book_img book_img_samll">
-                    <img className="book_img book_img_samll" src={book.coverUrl} alt={title}/>
+                    <img className="book_img book_img_samll" src={book_img} alt={book.coverUrl}/>
                 </div>
                 <div className="info">
                     <p dangerouslySetInnerHTML={{__html: title}}/>
                     <p><span>{book.author}</span> | <span>{book.publisher}</span></p>
-                    <button className="button" onClick={this.handleAddCallNumber.bind(this, book.isbn)}>추가 하기</button>
+                    {button}
                 </div>
             </li>)
         }.bind(this)) : (<li>검색 결과가 없습니다.</li>);
@@ -89,3 +96,14 @@ export default class Search extends React.Component {
         )
     }
 }
+
+
+let mapStateToProps = (state) => {
+    return {
+        user_id: state.auth.user_id
+    };
+};
+
+Search = connect(mapStateToProps)(Search);
+
+export default Search;

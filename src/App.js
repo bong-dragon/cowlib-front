@@ -35,11 +35,11 @@ class App extends React.Component {
             credentials: 'include',
             method: 'get'
         }).catch(function (err) {
-
             console.log("we got erreo");
             console.log(err);
         })
         let body = await response.json();
+        console.log(`hello ${body.name}`);
         this.props.syncAuthInfo(body);
     }
 
@@ -67,10 +67,7 @@ class App extends React.Component {
         return (
             <div>
                 <Header/>
-                {isModal ?
-                  this.previousChildren :
-                  this.props.children
-                }
+                {isModal ? this.previousChildren : this.props.children}
                 {isModal && (
                   <Modal isOpen={true} returnTo={location.state.returnTo}>
                     {this.props.children}

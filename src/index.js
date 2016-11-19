@@ -20,7 +20,7 @@ ReactDOM.render((
             <Route path="/" component={App}>
                 <IndexRoute component={Main}/>
                 <Route path="search" component={Search}/>
-                <Route path=":userId" component={Library}/>
+                <Route path=":ownerId" component={Library}/>
             </Route>
         </Router>
     </Provider>
