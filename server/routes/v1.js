@@ -21,7 +21,8 @@ router.get('/bookMetas/search', (req, res) => {
 });
 
 router.post('/callNumbers', (req, res) => {
-    let ownerId = req.user? req.user.id: '';
+    let owner = req.cookies["cowlib-user"];
+    let ownerId = owner? owner.id: '';
     let bookMetaId = req.query.bookMetaId? req.query.bookMetaId: '';
     
     let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers?ownerId=${ownerId}&bookMetaId=${bookMetaId}`;
@@ -31,8 +32,9 @@ router.post('/callNumbers', (req, res) => {
 });
 
 router.post('/callNumbers/:callNumberId/borrow', (req, res) => {
+    let user = req.cookies["cowlib-user"];
     let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
-    let borrowerId = req.user.id? req.user.id : '';
+    let borrowerId = user? user.id : '';
     
     let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
     console.log(`url: ${url}`);
@@ -41,8 +43,9 @@ router.post('/callNumbers/:callNumberId/borrow', (req, res) => {
 });
 
 router.delete('/callNumbers/:callNumberId/borrow', (req, res) => {
+    let user = req.cookies["cowlib-user"];
     let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
-    let borrowerId = req.user? req.user.id : '';
+    let borrowerId = user? user.id : '';
     
     let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
     console.log(`url: ${url}`);
@@ -51,8 +54,9 @@ router.delete('/callNumbers/:callNumberId/borrow', (req, res) => {
 });
 
 router.post('/callNumbers/:callNumberId/reserve', (req, res) => {
+    let user = req.cookies["cowlib-user"];
     let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
-    let reserverId = req.user.id? req.user.id : '';
+    let reserverId = user? user.id : '';
     
     let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/reserve?reserverId=${reserverId}`;
     console.log(`url: ${url}`);
@@ -61,8 +65,9 @@ router.post('/callNumbers/:callNumberId/reserve', (req, res) => {
 });
 
 router.delete('/callNumbers/:callNumberId/reserve', (req, res) => {
+    let user = req.cookies["cowlib-user"];
     let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
-    let reserverId = req.user.id? req.user.id : '';
+    let reserverId = user.id? user.id : '';
 
     let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/reserve?reserverId=${reserverId}`;
     console.log(`url: ${url}`);
