@@ -23,7 +23,7 @@ class Search extends React.Component {
             if (book.isbn == isbn) {
                 let ownerId = this.props.user_id;
                 let bookMetaId = book.id;
-                let url = `/v1/libs/${ownerId}/callNumber?bookMetaId=${bookMetaId}`;
+                let url = `/v1/callNumbers?ownerId=${ownerId}&bookMetaId=${bookMetaId}`;
                 fetch(url, {
                     credentials: 'include',
                     method: 'post'

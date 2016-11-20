@@ -8,7 +8,7 @@ const convertJson = (res) => res.json();
 const handleException = (ex) => {
     console.log('****************** API ERROR')
     console.log(ex);
-}
+};
 
 
 router.get('/bookMetas/search', (req, res) => {
@@ -20,59 +20,64 @@ router.get('/bookMetas/search', (req, res) => {
     fetch(url).then(convertJson).then((json) => res.json(json)).catch(handleException);
 });
 
-router.post('/libs/:ownerId/callNumber', (req, res) => {
-    let ownerId = req.params.ownerId? req.params.ownerId: '';
+router.post('/callNumbers', (req, res) => {
+    let ownerId = req.user? req.user.id: '';
     let bookMetaId = req.query.bookMetaId? req.query.bookMetaId: '';
-    let url = `${COWLIB_SERVER_API_URL}/v1/libs/${ownerId}/callNumber?bookMetaId=${bookMetaId}`;
+    
+    let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers?ownerId=${ownerId}&bookMetaId=${bookMetaId}`;
     console.log(`url: ${url}`);
 
     fetch(url, {method:'post'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
-})
+});
 
-router.post('/libs/:ownerId/borrow', (req, res) => {
-    let ownerId = req.params.ownerId? req.params.ownerId: '';
-    let callNumberId = req.query.callNumberId? req.query.callNumberId: '';
+router.post('/callNumbers/:callNumberId/borrow', (req, res) => {
+    let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
     let borrowerId = req.user.id? req.user.id : '';
-    let url = `${COWLIB_SERVER_API_URL}/v1/libs/${ownerId}/borrow?callNumberId=${callNumberId}&borrowerId=${borrowerId}`;
+    
+    let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
     console.log(`url: ${url}`);
 
     fetch(url, {method:'post'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
-})
+});
 
-router.delete('/libs/:ownerId/borrow', (req, res) => {
-    let ownerId = req.params.ownerId? req.params.ownerId: '';
-    let callNumberId = req.query.callNumberId? req.query.callNumberId: '';
-    let borrowerId = req.user.id? req.user.id : '';
-    let url = `${COWLIB_SERVER_API_URL}/v1/libs/${ownerId}/borrow?callNumberId=${callNumberId}&borrowerId=${borrowerId}`;
+router.delete('/callNumbers/:callNumberId/borrow', (req, res) => {
+    let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
+    let borrowerId = req.user? req.user.id : '';
+    
+    let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
     console.log(`url: ${url}`);
 
     fetch(url, {method:'delete'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
-})
+});
 
-router.post('/wait', (req, res) => {
-    let callNumberId = req.query.callNumberId? req.query.callNumberId: '';
-    let waiterId = req.user.id? req.user.id : '';
-    let url = `${COWLIB_SERVER_API_URL}/v1/wait?callNumberId=${waiterId}&borrowerId=${waiterId}`;
+router.post('/callNumbers/:callNumberId/reserve', (req, res) => {
+    let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
+    let reserverId = req.user.id? req.user.id : '';
+    
+    let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/reserve?reserverId=${reserverId}`;
     console.log(`url: ${url}`);
 
     fetch(url, {method:'post'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
-})
+});
 
-router.delete('/wait', (req, res) => {
-    let callNumberId = req.query.callNumberId? req.query.callNumberId: '';
-    let waiterId = req.user.id? req.user.id : '';
-    let url = `${COWLIB_SERVER_API_URL}/v1/wait?callNumberId=${waiterId}&borrowerId=${waiterId}`;
+router.delete('/callNumbers/:callNumberId/reserve', (req, res) => {
+    let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
+    let reserverId = req.user.id? req.user.id : '';
+
+    let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/reserve?reserverId=${reserverId}`;
     console.log(`url: ${url}`);
-
+    
     fetch(url, {method:'delete'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
-})
+});
 
 router.get('/books/', (req, res) => {
     let ownerId = req.query.ownerId? req.query.ownerId: '';
     let url = `${COWLIB_SERVER_API_URL}/v1/books?ownerId=${ownerId}`;
     console.log(`url: ${url}`);
 
-    fetch(url).then(convertJson).then((json) => res.json(json)).catch(handleException);
+    fetch(url).then(convertJson).then((json) => {
+        res.json(json);
+    }).catch(handleException);
 });
 
 
