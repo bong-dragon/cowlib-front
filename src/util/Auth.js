@@ -1,14 +1,18 @@
 import React from 'react';
 import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import 'whatwg-fetch';
-import {login, logout} from '../action';
+import {logout} from '../action';
 import {connect} from 'react-redux';
+import {Link} from 'react-router';
 
 
 class Auth extends React.Component {
 
-    handleLogin(){
-        this.props.handleLogin();
+    handleLogin() {
+        var URL = "/auth/facebook";
+        var title = "페이스북";
+        var status = "scrollbars=no, status=no;";
+        window.open(URL, title, status);
     }
 
     handleLogout(){
@@ -16,18 +20,17 @@ class Auth extends React.Component {
     }
     
     render() {
-        var loginButton = <Button type="button" onClick={this.handleLogin.bind(this)}>로그인</Button>
-        var logoutButton = <Button type="button" onClick={this.handleLogout.bind(this)}>로그아웃</Button>
-        var button = !!this.props.user_id? logoutButton: loginButton;
+        var profile = this.props.profile? this.props.profile : "/img/basic_profile.png";
+        var myLibrary = "/"+ this.props.user_id;
+
+        var loginButton = <button onClick={this.handleLogin.bind(this)}><img src="/img/facebook.png"></img><span>로그인</span></button>
+        var logoutButton = <button onClick={this.handleLogout.bind(this)}><span>로그아웃</span></button>
+        var myLibraryButton = <Link to={myLibrary}><img className="profile" src={profile} alt="profile" /><span>내도서관</span></Link>
+         var button = !!this.props.user_id? myLibraryButton: loginButton;
 
         return (
-            <div>
+            <div className="auth">
                 {button}
-                <div>{this.props.user_id}</div>
-                <div>{this.props.facebook_id}</div>
-                <div>{this.props.profile}</div>
-                <div>{this.props.name}</div>
-
             </div>
         )
     }
@@ -35,11 +38,9 @@ class Auth extends React.Component {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        handleLogin: () => dispatch(login()),
         handleLogout: () => dispatch(logout())
     };
 };
-
 
 let mapStateToProps = (state) => {
     return {

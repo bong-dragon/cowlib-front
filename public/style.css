@@ -1,0 +1,162 @@
+body {
+	max-width: 600px;
+}
+ul {
+	padding: 0;
+	list-style: none;
+}
+
+p {
+	margin: 0;
+}
+
+input:focus {
+	outline:0;
+}
+
+button:focus {
+	outline:0;
+}
+
+
+.profile {
+	width: 30px;
+	border: 1px;
+	border-radius: 50px;
+}
+
+header {
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+	width: 100%;
+	position: absolute;
+}
+
+header .title {
+	margin-top: 6px;
+	margin-left: 10px;
+	float: left;
+	font-size: 30px;
+}
+
+header .title img {
+	width: 40px;
+	padding-bottom: 6px;
+	padding-right: 6px;
+}
+
+header a {
+	color: #000;
+}
+
+header .auth {
+	padding-top: 11px;
+	float: right;
+	padding-right: 20px;
+}
+
+header .auth button {
+	border: none;
+	border-radius: 5px;
+	padding: 1px 5px;
+	background-color: #365899;
+	color: #fff;
+}
+
+header .auth a {
+	display: block;
+	border-radius: 17px;
+}
+
+header .auth img{
+	padding: 4px;
+	width:30px;
+}
+
+section {
+	padding-top: 50px;
+}
+
+section .guide {
+	width: 100%;
+}
+
+section .books li{
+	overflow: hidden;
+	margin: 10px;
+}
+
+section .books li .info {
+	float: left;
+	width: 213px;
+	padding-left: 20px;
+	line-height: 24px;
+}
+
+section .books li .book_title {
+	color: #3774B1;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+
+section .books li .book_img {
+	float: left;
+	width: 120px;
+	height: auto;
+	overflow: hidden;
+	background-size: contain;
+	background-position: center center;
+}
+section .books li .book_img  img{
+	max-height: 160px;
+	max-width: 120px;
+	 /*max-height: 92%; */
+	 /*max-width: 92%; */
+}
+
+section .books li .book_img_samll {
+	width: 67px;
+}
+
+
+section .searchContainer {
+	padding: 10px;
+	position: relative;
+}
+
+section .searchContainer input {
+	width: 100%;
+	padding: 7px;
+    border: 0;
+    background: #EEE;
+    border-radius: 10px;
+}
+
+section .searchContainer button {
+	border: none;
+	position: absolute;
+	width: 27px;
+	height: 27px;
+	top: 15px;
+	right: 14px;
+
+	background-color: Transparent;
+	background-size: 23px;
+	background-repeat:no-repeat;
+	background-image: url("/img/search_icon.png")
+}
+
+section .searchResults {
+	padding: 10px;
+}
+
+.button {
+	background-color: #f0f0f0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 0.25em;
+    height: 2.5em;
+    line-height: 2.5;
+    margin: 0.25em;
+    padding: 0 1em;
+    width: 58%;
+}

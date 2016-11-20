@@ -1,7 +1,8 @@
 import React from 'react';
 import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
+import OwnerBook from './library/OwnerBook'
 import 'whatwg-fetch';
-
+import {Link} from 'react-router';
 
 export default class Library extends React.Component {
 
@@ -12,12 +13,13 @@ export default class Library extends React.Component {
         }
     }
 
-    async componentDidMount() {
-
-        let response = await fetch('/books', {
+    async componentWillMount() {
+        let ownerId = this.props.params.ownerId;
+        let response = await fetch(`/v1/books?ownerId=${ownerId}`, {
+            credentials: 'include',
             method: 'get'
         }).catch(function (err) {
-            // Error :
+            console.log(`get error, ${err}`);
         });
 
         let body = await response.json();
@@ -27,37 +29,37 @@ export default class Library extends React.Component {
 
     }
 
+    renderWaitList(wait_list) {
+        return "list"
+    }
+
     render() {
         var books = this.state.books;
-        var newbook = books.map(function (book, i) {
-            return (
-                <Col xs={6} md={4}>
-                    <Thumbnail src={book.cover_url} alt="242x200">
-                        <h3>Thumbnail label</h3>
-                        <p>Description</p>
-                        <p>
-                            <Button bsStyle="primary">Button</Button>&nbsp;
-                            <Button bsStyle="default">Button</Button>
-                        </p>
-                    </Thumbnail>
-                </Col>
-            )
+        var no_borrow = "없음";
+        var no_waitlist = "없음";
 
-        });
+        var books_ui = "도서관에 책이 없어요. 책을 추가해 주세요";
+
+        if(books.length > 0) {
+            console.log("owner")
+            console.log(books);
+            books_ui = books.map(function (book, i) {
+            return <OwnerBook key={i} book={book}/>
+            });
+        }
+
         return (
-            <Grid>
-                <Row>
-                    <div>{this.props.params.userId}</div>
-                </Row>
-                <Row>
-                    {newbook}
-                </Row>
-                <div className="detail">
-                    {this.props.children}
+            <section>
+                <div className="">
+                    <Link to={{
+                        pathname: '/search',
+                       state: { modal: true, returnTo: this.props.location.pathname }
+                    }}>추가하기</Link>
                 </div>
-            </Grid>
+                <ul className="books">
+                    {books_ui}
+                </ul>
+            </section>
         )
     }
-    
-    
 }

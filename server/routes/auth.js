@@ -6,64 +6,47 @@ import 'isomorphic-fetch';
 
 
 const router = express.Router();
+const COWLIB_SERVER_API_URL = "http://localhost:8080"
 
-router.get('/success', isLoggedIn, (req, res) => {
-
-    var callback = function () {
-
-        var options = {
-            root: __dirname + '/../../public'
-        };
-        res.sendFile('success.html', options, function (err) {
-            if(err){
-                console.log(err);
-            }
-        });
-    };
-
-    let user_id = req.user.id;
-    let photo = req.user.photos[0].value;
-    let name = req.user.displayName;
-
-    fetch(`http://localhost:8080/auth?facebookId=${user_id}&profile=${photo}&name=${name}`, {
-        method: 'POST',
-    }).then(function (response) {
-        return response.json();
-    }).then(function (json) {
-        res.cookie('cowlib-user', json);
-        callback();
-    }).catch(function (ex) {
-        console.log('parsing failed', ex)
-    });
-
-});
-
-router.get('/fail', isLoggedIn, (req, res) => {
-    res.json({
-        fail: "fail"
-    });
-});
-
-router.get('/facebook', passport.authenticate('facebook', {scope: ['email', 'public_profile', 'user_friends']}));
-
-// handle the callback after facebook has authenticated the user
-router.get('/facebook/callback',
-    passport.authenticate('facebook', {
-        successRedirect: '/auth/success',
-        failureRedirect: '/auth/fail'
-    })
-);
-
-// route for logging out
-router.get('/logout', function (req, res) {
-    req.logout();
-    res.redirect('/');
-});
-
+// user profile
 router.get('/', (req, res) => {
     res.json(req.cookies["cowlib-user"]);
 });
 
+// facebook login
+router.get('/facebook', passport.authenticate('facebook', {scope: ['email', 'public_profile', 'user_friends']}));
+router.get('/facebook/callback',
+    passport.authenticate('facebook', {
+        successRedirect: '/auth/success',
+        failureRedirect: '/auth/fail'
+    }));
+
+// after facebook login
+router.get('/success', isLoggedIn, (req, res) => {
+    let user_id = req.user.id;
+    let photo = req.user.photos[0].value;
+    let name = req.user.displayName;
+
+    let url = `${COWLIB_SERVER_API_URL}/v1/auth?facebookId=${user_id}&profile=${photo}&name=${name}`;
+    console.log(`url: ${url}`);
+
+    fetch(url, {method:'post'}).then((response)=> response.json()).then((json) => {
+        res.cookie('cowlib-user', json);
+        res.redirect('/success.html');
+    }).catch((ex) => console.log('parsing failed', ex));
+
+});
+router.get('/fail', (req, res) => {
+    res.redirect('/fail.html');
+});
+
+
+// route for logging out
+router.get('/logout', (req, res) => {
+    req.logout(); // passport logout
+    res.cookie('cowlib-user', {}); // cookie logout
+    res.redirect('/');
+});
 
 function isLoggedIn(req, res, next) {
     // if user is authenticated in the session, carry on

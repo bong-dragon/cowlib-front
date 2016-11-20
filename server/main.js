@@ -31,11 +31,12 @@ app.use(passport.session());
 app.use(express.static(__dirname + '/../public'));
 
 
-import books from './routes/booksSample';
 import auth from './routes/auth';
+import v1 from './routes/v1';
 
-app.use('/books', books);
 app.use('/auth', auth);
+app.use('/v1/', v1);
+
 app.get('*', function (request, response){
     var options = {
         root: __dirname + '/../public'
@@ -45,7 +46,10 @@ app.get('*', function (request, response){
             console.log(err);
         }
     });
+
+    //response.redirect('/')
 });
+
 const server = app.listen(port, () => {
     console.log('Express listening on port', port);
 });
