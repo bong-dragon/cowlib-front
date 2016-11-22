@@ -26,7 +26,8 @@ class Auth extends React.Component {
         var loginButton = <button onClick={this.handleLogin.bind(this)}><img src="/img/facebook.png"></img><span>로그인</span></button>
         var logoutButton = <button onClick={this.handleLogout.bind(this)}><span>로그아웃</span></button>
         var myLibraryButton = <Link to={myLibrary}><img className="profile" src={profile} alt="profile" /><span>내도서관</span></Link>
-         var button = !!this.props.user_id? myLibraryButton: loginButton;
+         
+        var button = !!this.props.user_id? myLibraryButton: loginButton;
 
         return (
             <div className="auth">

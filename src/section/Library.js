@@ -1,10 +1,12 @@
 import React from 'react';
 import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import OwnerBook from './library/OwnerBook'
+import GuestBook from './library/GuestBook'
 import 'whatwg-fetch';
 import {Link} from 'react-router';
+import {connect} from 'react-redux';
 
-export default class Library extends React.Component {
+class Library extends React.Component {
 
     constructor() {
         super();
@@ -41,11 +43,18 @@ export default class Library extends React.Component {
         var books_ui = "도서관에 책이 없어요. 책을 추가해 주세요";
 
         if(books.length > 0) {
-            console.log("owner")
             console.log(books);
-            books_ui = books.map(function (book, i) {
-            return <OwnerBook key={i} book={book}/>
-            });
+            console.log(this.props.user_id);
+
+            if(this.props.user_id) {
+                books_ui = books.map(function (book, i) {
+                    return <OwnerBook key={i} book={book}/>
+                });
+            } else {
+                books_ui = books.map(function (book, i) {
+                    return <GuestBook key={i} book={book}/>
+                });
+            }
         }
 
         return (
@@ -63,3 +72,12 @@ export default class Library extends React.Component {
         )
     }
 }
+
+
+let mapStateToProps = (state) => {
+    return {
+        user_id: state.auth.user_id
+    };
+};
+
+export default Library = connect(mapStateToProps)(Library);
