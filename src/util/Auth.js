@@ -1,5 +1,4 @@
 import React from 'react';
-import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import 'whatwg-fetch';
 import {logout} from '../action';
 import {connect} from 'react-redux';
@@ -15,19 +14,22 @@ class Auth extends React.Component {
         window.open(URL, title, status);
     }
 
-    handleLogout(){
+    handleLogout() {
         this.props.handleLogout();
     }
-    
-    render() {
-        var profile = this.props.profile? this.props.profile : "/img/basic_profile.png";
-        var myLibrary = "/"+ this.props.user_id;
 
-        var loginButton = <button onClick={this.handleLogin.bind(this)}><img src="/img/facebook.png"></img><span>로그인</span></button>
-        var logoutButton = <button onClick={this.handleLogout.bind(this)}><span>로그아웃</span></button>
-        var myLibraryButton = <Link to={myLibrary}><img className="profile" src={profile} alt="profile" /><span>내도서관</span></Link>
-         
-        var button = !!this.props.user_id? myLibraryButton: loginButton;
+    render() {
+        var profile = this.props.profile ? this.props.profile : "/img/basic_profile.png";
+        var myLibrary = "/" + this.props.user_id;
+
+        var loginButton = (<button onClick={this.handleLogin.bind(this)}>
+            <img src="/img/facebook.png"></img><span>로그인</span></button>);
+        var logoutButton = (<button onClick={this.handleLogout.bind(this)}>
+            <span>로그아웃</span></button>);
+        var myLibraryButton = (<Link to={myLibrary}>
+            <img className="profile" src={profile} alt="profile"/><span>내도서관</span></Link>);
+
+        var button = !!this.props.user_id ? myLibraryButton : loginButton;
 
         return (
             <div className="auth">

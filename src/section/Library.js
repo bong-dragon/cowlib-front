@@ -1,10 +1,11 @@
 import React from 'react';
-import {Thumbnail, Button, Grid, Row, Col, ButtonToolbar} from 'react-bootstrap';
 import OwnerBook from './library/OwnerBook'
 import GuestBook from './library/GuestBook'
 import 'whatwg-fetch';
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
+import {handleError} from '../support/Ajax'
+
 
 class Library extends React.Component {
 
@@ -20,33 +21,24 @@ class Library extends React.Component {
         let response = await fetch(`/v1/books?ownerId=${ownerId}`, {
             credentials: 'include',
             method: 'get'
-        }).catch(function (err) {
-            console.log(`get error, ${err}`);
-        });
+        }).catch(handleError);
 
         let body = await response.json();
         this.setState({
             books: body
         });
-
-    }
-
-    renderWaitList(wait_list) {
-        return "list"
     }
 
     render() {
-        var books = this.state.books;
-        var no_borrow = "없음";
-        var no_waitlist = "없음";
+        let books = this.state.books;
+        let books_ui = "도서관에 책이 없어요. 책을 추가해 주세요";
+        let ownerId = this.props.params.ownerId;
+        let userId = this.props.user_id;
+        let isOwner = (userId && ownerId == userId) ? true : false;
 
-        var books_ui = "도서관에 책이 없어요. 책을 추가해 주세요";
-
-        if(books.length > 0) {
+        if (books.length > 0) {
             console.log(books);
-            console.log(this.props.user_id);
-
-            if(this.props.user_id) {
+            if (isOwner) {
                 books_ui = books.map(function (book, i) {
                     return <OwnerBook key={i} book={book}/>
                 });
@@ -60,10 +52,10 @@ class Library extends React.Component {
         return (
             <section>
                 <div className="">
-                    <Link to={{
+                    {isOwner && (<Link to={{
                         pathname: '/search',
                        state: { modal: true, returnTo: this.props.location.pathname }
-                    }}>추가하기</Link>
+                    }}>추가하기</Link>)}
                 </div>
                 <ul className="books">
                     {books_ui}

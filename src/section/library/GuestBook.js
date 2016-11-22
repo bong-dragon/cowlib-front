@@ -12,7 +12,7 @@ class GuestBook extends React.Component {
 
         var reserverCount = book.reservers ? book.reservers.length : 0;
         var borrowMsg = book.borrower ? "누군가 읽고 있어요" : '아무도 안 읽고 있어요';
-        
+
         return (<li>
             <div className="book_img">
                 <img className="book_img" src={book_img} alt={title}/>
