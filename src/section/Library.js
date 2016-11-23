@@ -1,19 +1,19 @@
 import React from 'react';
 import OwnerBook from './library/OwnerBook'
 import GuestBook from './library/GuestBook'
+import {getBooks} from '../action';
 import 'whatwg-fetch';
+import {handleError} from '../support/Ajax'
+
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import {handleError} from '../support/Ajax'
+
 
 
 class Library extends React.Component {
 
     constructor() {
         super();
-        this.state = {
-            books: []
-        }
     }
 
     async componentWillMount() {
@@ -24,13 +24,11 @@ class Library extends React.Component {
         }).catch(handleError);
 
         let body = await response.json();
-        this.setState({
-            books: body
-        });
+        this.props.getBooks(body);
     }
 
     render() {
-        let books = this.state.books;
+        let books = this.props.books;
         let books_ui = "도서관에 책이 없어요. 책을 추가해 주세요";
         let ownerId = this.props.params.ownerId;
         let userId = this.props.user_id;
@@ -64,12 +62,17 @@ class Library extends React.Component {
         )
     }
 }
-
-
-let mapStateToProps = (state) => {
+let mapDispatchToProps = (dispatch) => {
     return {
-        user_id: state.auth.user_id
+        getBooks: (books) => dispatch(getBooks(books))
     };
 };
 
-export default Library = connect(mapStateToProps)(Library);
+let mapStateToProps = (state) => {
+    return {
+        user_id: state.auth.user_id,
+        books: state.shelves.books
+    };
+};
+
+export default Library = connect(mapStateToProps, mapDispatchToProps)(Library);

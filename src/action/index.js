@@ -1,6 +1,8 @@
 import 'whatwg-fetch';
 
 export const AUTH = "AUTH";
+export const GET_BOOKS = "GET_BOOKS";
+export const ADD_BOOK = "ADD_BOOK";
 
 export function getAuthInfo(body) {
     return {
@@ -21,11 +23,16 @@ export function logout(value) {
     };
 }
 
-export function getLibBooksInfo() {
+ export function getBooks(books) {
     return {
-        type: AUTH,
-        user_id: null,
-        name: null,
-        profile: null
+        type: GET_BOOKS,
+        books: books
+    };
+}
+
+export function addBook(book) {
+    return {
+        type: ADD_BOOK,
+        book: book
     };
 }
