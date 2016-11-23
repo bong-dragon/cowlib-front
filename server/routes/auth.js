@@ -24,7 +24,7 @@ router.get('/facebook/callback',
 // after facebook login
 router.get('/success', isLoggedIn, (req, res) => {
     let user_id = req.user.id;
-    let photo = req.user.photos[0].value;
+    let photo = encodeURIComponent(req.user.photos[0].value);
     let name = req.user.displayName;
 
     let url = `${COWLIB_SERVER_API_URL}/v1/auth?facebookId=${user_id}&profile=${photo}&name=${name}`;
