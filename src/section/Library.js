@@ -16,8 +16,7 @@ class Library extends React.Component {
         super();
     }
 
-    async componentWillMount() {
-        let ownerId = this.props.params.ownerId;
+    async getBooks(ownerId) {
         let response = await fetch(`/v1/books?ownerId=${ownerId}`, {
             credentials: 'include',
             method: 'get'
@@ -27,9 +26,22 @@ class Library extends React.Component {
         this.props.getBooks(body);
     }
 
+    componentWillMount() {
+        this.getBooks(this.props.params.ownerId);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let lastOwnerId = this.props.params.ownerId;
+        let recentOwnerId = nextProps.params.ownerId;
+        if(lastOwnerId !== recentOwnerId){
+            console.log(`${lastOwnerId} -> ${recentOwnerId}`);
+            this.getBooks(recentOwnerId);
+        }   
+    }
+
     render() {
         let books = this.props.books;
-        let books_ui = "도서관에 책이 없어요. 책을 추가해 주세요";
+        let books_ui = (<li>도서관에 책이 없어요. 책을 추가해 주세요</li>);
         let ownerId = this.props.params.ownerId;
         let userId = this.props.user_id;
         let isOwner = (userId && ownerId == userId) ? true : false;
@@ -49,7 +61,7 @@ class Library extends React.Component {
 
         return (
             <section>
-                <div className="">
+                <div className="searchModalOpenButton">
                     {isOwner && (<Link to={{
                         pathname: '/search',
                        state: { modal: true, returnTo: this.props.location.pathname }

@@ -80,9 +80,12 @@ section .guide {
 	width: 100%;
 }
 
-section .books li{
+section .books > li{
 	overflow: hidden;
-	margin: 10px;
+	margin: 0 10px;
+	padding: 10px 0;
+
+	border-bottom: 1px solid #eee;
 }
 
 section .books li .info {
@@ -101,15 +104,15 @@ section .books li .book_title {
 
 section .books li .book_img {
 	float: left;
-	width: 120px;
+	width: 77px;
 	height: auto;
 	overflow: hidden;
 	background-size: contain;
 	background-position: center center;
 }
 section .books li .book_img  img{
-	max-height: 160px;
-	max-width: 120px;
+	max-height: 112px;
+	max-width: 77px;
 	 /*max-height: 92%; */
 	 /*max-width: 92%; */
 }
@@ -146,8 +149,21 @@ section .searchContainer button {
 	background-image: url("/img/search_icon.png")
 }
 
-section .searchResults {
-	padding: 10px;
+.modalContainer section {
+	padding-top: 10px;
+}
+
+.modalContainer section .books li .info {
+	float: left;
+	width: 146px;
+	padding-left: 13px;
+	line-height: 16px;
+	font-size: smaller;
+}
+
+.searchModalOpenButton {
+	text-align: right;
+	margin: 10px;
 }
 
 .button {
