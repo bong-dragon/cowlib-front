@@ -21,7 +21,7 @@ const Modal = React.createClass({
     render() {
         return (
             <div className="modalContainer" style={this.styles}>
-                <p><Link to={this.props.returnTo}>Back</Link></p>
+                <p className="backButton"><Link to={this.props.returnTo}>Back</Link></p>
                 {this.props.children}
             </div>
         )

@@ -161,6 +161,10 @@ section .searchContainer button {
 	font-size: smaller;
 }
 
+.modalContainer .backButton {
+	text-align: right;
+}
+
 .searchModalOpenButton {
 	text-align: right;
 	margin: 10px;
