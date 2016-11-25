@@ -5,6 +5,11 @@ import {connect} from 'react-redux';
 
 class GuestBook extends React.Component {
 
+    reserverBook(book) {
+        console.log("책 빌려주세요~");
+        console.log(book);
+
+    }
     render() {
         var book = this.props.book;
         var title = book.bookMeta.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
@@ -22,6 +27,7 @@ class GuestBook extends React.Component {
                 <p><span>{book.bookMeta.author}</span> | <span>{book.bookMeta.publisher}</span></p>
                 <p>{borrowMsg} </p>
                 <ul>대기자수 : {reserverCount}</ul>
+                <button className="button" onClick={this.reserverBook.bind(this, book)}>예약하기</button>
             </div>
         </li>)
     }
