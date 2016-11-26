@@ -2,6 +2,7 @@ import React from 'react';
 import 'whatwg-fetch';
 import SearchBook from './library/SearchBook'
 import {parseJson, handleError} from '../support/Ajax'
+import {addBook} from '../action';
 
 import {connect} from 'react-redux';
 
@@ -24,6 +25,7 @@ class Search extends React.Component {
 
         searchList.forEach(function (bookMeta) {
             if (bookMeta.id == id) {
+                console.log(`bookMeta: ${bookMeta.id}, bookId:${id}`)
                 let ownerId = this.props.userId;
                 let bookMetaId = bookMeta.id;
                 let url = `/v1/callNumbers?ownerId=${ownerId}&bookMetaId=${bookMetaId}`;
@@ -37,6 +39,9 @@ class Search extends React.Component {
                         this.setState({
                             searchList: searchList
                         })
+                        this.props.addBook({
+                            bookMeta: bookMeta
+                        });
                     })
                     .catch(handleError);
             }
@@ -85,6 +90,11 @@ class Search extends React.Component {
     }
 }
 
+let mapDispatchToProps = (dispatch) => {
+    return {
+        addBook: (book) => dispatch(addBook(book))
+    };
+};
 
 let mapStateToProps = (state) => {
     return {
@@ -92,6 +102,6 @@ let mapStateToProps = (state) => {
     };
 };
 
-Search = connect(mapStateToProps)(Search);
+Search = connect(mapStateToProps, mapDispatchToProps)(Search);
 
 export default Search;

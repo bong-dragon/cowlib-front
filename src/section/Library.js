@@ -1,37 +1,47 @@
 import React from 'react';
 import OwnerBook from './library/OwnerBook'
 import GuestBook from './library/GuestBook'
+import {getBooks} from '../action';
 import 'whatwg-fetch';
+import {handleError} from '../support/Ajax'
+
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
-import {handleError} from '../support/Ajax'
+
 
 
 class Library extends React.Component {
 
     constructor() {
         super();
-        this.state = {
-            books: []
-        }
     }
 
-    async componentWillMount() {
-        let ownerId = this.props.params.ownerId;
+    async getBooks(ownerId) {
         let response = await fetch(`/v1/books?ownerId=${ownerId}`, {
             credentials: 'include',
             method: 'get'
         }).catch(handleError);
 
         let body = await response.json();
-        this.setState({
-            books: body
-        });
+        this.props.getBooks(body);
+    }
+
+    componentWillMount() {
+        this.getBooks(this.props.params.ownerId);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        let lastOwnerId = this.props.params.ownerId;
+        let recentOwnerId = nextProps.params.ownerId;
+        if(lastOwnerId !== recentOwnerId){
+            console.log(`${lastOwnerId} -> ${recentOwnerId}`);
+            this.getBooks(recentOwnerId);
+        }   
     }
 
     render() {
-        let books = this.state.books;
-        let books_ui = "도서관에 책이 없어요. 책을 추가해 주세요";
+        let books = this.props.books;
+        let books_ui = (<li>도서관에 책이 없어요. 책을 추가해 주세요</li>);
         let ownerId = this.props.params.ownerId;
         let userId = this.props.user_id;
         let isOwner = (userId && ownerId == userId) ? true : false;
@@ -51,7 +61,7 @@ class Library extends React.Component {
 
         return (
             <section>
-                <div className="">
+                <div className="searchModalOpenButton">
                     {isOwner && (<Link to={{
                         pathname: '/search',
                        state: { modal: true, returnTo: this.props.location.pathname }
@@ -64,12 +74,17 @@ class Library extends React.Component {
         )
     }
 }
-
-
-let mapStateToProps = (state) => {
+let mapDispatchToProps = (dispatch) => {
     return {
-        user_id: state.auth.user_id
+        getBooks: (books) => dispatch(getBooks(books))
     };
 };
 
-export default Library = connect(mapStateToProps)(Library);
+let mapStateToProps = (state) => {
+    return {
+        user_id: state.auth.user_id,
+        books: state.shelves.books
+    };
+};
+
+export default Library = connect(mapStateToProps, mapDispatchToProps)(Library);

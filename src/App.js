@@ -20,8 +20,8 @@ const Modal = React.createClass({
 
     render() {
         return (
-            <div style={this.styles}>
-                <p><Link to={this.props.returnTo}>Back</Link></p>
+            <div className="modalContainer" style={this.styles}>
+                <p className="backButton"><Link to={this.props.returnTo}>Back</Link></p>
                 {this.props.children}
             </div>
         )
