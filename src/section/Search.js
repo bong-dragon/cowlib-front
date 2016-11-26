@@ -25,7 +25,7 @@ class Search extends React.Component {
 
         searchList.forEach(function (bookMeta) {
             if (bookMeta.id == id) {
-                console.log(`bookMeta: ${bookMeta.id}, bookId:${id}`)
+                console.log(`bookMeta: ${bookMeta.id}, bookId:${id}`);
                 let ownerId = this.props.userId;
                 let bookMetaId = bookMeta.id;
                 let url = `/v1/callNumbers?ownerId=${ownerId}&bookMetaId=${bookMetaId}`;
@@ -34,13 +34,14 @@ class Search extends React.Component {
                     credentials: 'include',
                     method: 'post'
                 }).then(parseJson)
-                    .then((responseJson) => {
+                    .then((callNumber) => {
                         bookMeta.isInserted = true;
                         this.setState({
                             searchList: searchList
-                        })
+                        });
                         this.props.addBook({
-                            bookMeta: bookMeta
+                            bookMeta: bookMeta,
+                            callNumber: callNumber
                         });
                     })
                     .catch(handleError);
@@ -57,9 +58,9 @@ class Search extends React.Component {
             credentials: 'include',
             method: 'get'
         }).catch(handleError);
-        
+
         let searchList = await response.json();
-        
+
         console.log(searchList);
         this.setState({searchList: searchList});
     }

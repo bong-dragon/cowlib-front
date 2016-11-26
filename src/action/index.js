@@ -3,6 +3,7 @@ import 'whatwg-fetch';
 export const AUTH = "AUTH";
 export const GET_BOOKS = "GET_BOOKS";
 export const ADD_BOOK = "ADD_BOOK";
+export const DELETE_CALLNUMBER = "DELETE_CALLNUMBER";
 
 export function getAuthInfo(body) {
     return {
@@ -23,10 +24,17 @@ export function logout(value) {
     };
 }
 
- export function getBooks(books) {
+export function getBooks(books) {
     return {
         type: GET_BOOKS,
         books: books
+    };
+}
+
+export function deleteCallNumber(callNumber) {
+    return {
+        type: DELETE_CALLNUMBER,
+        callNumber: callNumber
     };
 }
 

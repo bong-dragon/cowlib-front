@@ -31,6 +31,15 @@ router.post('/callNumbers', (req, res) => {
     fetch(url, {method:'post'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
 });
 
+router.delete('/callNumbers', (req, res) => {
+    let id = req.query.id? req.query.id: '';
+
+    let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers?id=${id}`;
+    console.log(`url: ${url}`);
+
+    fetch(url, {method:'delete'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
+});
+
 router.post('/callNumbers/:callNumberId/borrow', (req, res) => {
     let user = req.cookies["cowlib-user"];
     let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
