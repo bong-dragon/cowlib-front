@@ -3,6 +3,7 @@ import 'whatwg-fetch';
 import SearchBook from './library/SearchBook'
 import {parseJson, handleError} from '../support/Ajax'
 import {addBook} from '../action';
+import {_} from 'underscore'
 
 import {connect} from 'react-redux';
 
@@ -12,7 +13,8 @@ class Search extends React.Component {
         super(props);
         this.state = {
             q: '',
-            searchList: []
+            searchList: [],
+            pageno: 0
         };
     }
 
@@ -52,17 +54,46 @@ class Search extends React.Component {
     async handleSubmit(e) {
         e.preventDefault();
         let q = this.state.q;
+
         console.log(q);
 
-        let response = await fetch(`/v1/bookMetas/search/?q=${q}`, {
+        let response = await fetch(`/v1/bookMetas/search/?q=${q}&pageno=1`, {
             credentials: 'include',
             method: 'get'
         }).catch(handleError);
 
         let searchList = await response.json();
-
         console.log(searchList);
-        this.setState({searchList: searchList});
+
+        this.setState({
+            searchList: searchList,
+            pageno: 1
+        });
+    }
+
+    async handleShowMore(e) {
+        e.preventDefault();
+        let q = this.state.q;
+        let pageno = ++this.state.pageno;
+
+        console.log(q);
+
+        let response = await fetch(`/v1/bookMetas/search/?q=${q}&pageno=${pageno}`, {
+            credentials: 'include',
+            method: 'get'
+        }).catch(handleError);
+
+        let searchList = await response.json();
+        console.log(searchList);
+
+        this.setState({
+            searchList: _.union(this.state.searchList, searchList),
+            pageno: pageno
+        });
+    }
+
+    isShowMorePossible(){
+        return this.state.pageno < 3 && this.state.pageno > 0;
     }
 
     render() {
@@ -86,6 +117,9 @@ class Search extends React.Component {
                 <ul className="searchResults books">
                     {searchList}
                 </ul>
+                {this.isShowMorePossible() && (
+                    <button className="button" onClick={this.handleShowMore.bind(this)}>더보기</button>
+                )}
             </section>
         )
     }

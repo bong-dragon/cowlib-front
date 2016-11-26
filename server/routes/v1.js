@@ -13,8 +13,10 @@ const handleException = (ex) => {
 
 router.get('/bookMetas/search', (req, res) => {
     let q = req.query.q? req.query.q: '';
+    let pageno = req.query.pageno? req.query.pageno: '';
+
     q = encodeURIComponent(q);
-    let url = `${COWLIB_SERVER_API_URL}/v1/bookMetas/search?q=${q}`;
+    let url = `${COWLIB_SERVER_API_URL}/v1/bookMetas/search?q=${q}&pageno=${pageno}`;
     console.log(`url: ${url}`);
 
     fetch(url).then(convertJson).then((json) => res.json(json)).catch(handleException);
