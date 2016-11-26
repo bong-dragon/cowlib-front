@@ -1,5 +1,6 @@
-import {AUTH, GET_BOOKS, ADD_BOOK} from '../action'
+import {AUTH, GET_BOOKS, ADD_BOOK, DELETE_CALLNUMBER} from '../action'
 import {combineReducers} from 'redux'
+import {_} from 'underscore'
 
 // local db
 const authInitialState = {
@@ -40,11 +41,20 @@ const shelves = (state = shelvesInitialState, action) => {
                     action.book
                 ]
             });
+        case DELETE_CALLNUMBER:
+            return Object.assign({}, state, {
+                books: _.without(state.books, findCallNumberContain(state.books, action.callNumber))
+            });
         default:
             return state;
     }
 };
 
+function findCallNumberContain(books, callNumber) {
+    return _.find(books, function (book) {
+        return book.callNumber && book.callNumber.id === callNumber.id
+    })
+}
 
 const cowlib = combineReducers({
     auth, shelves

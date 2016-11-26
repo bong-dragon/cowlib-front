@@ -1,13 +1,22 @@
 import React from 'react';
 
+import {handleError} from '../../support/Ajax'
 import {connect} from 'react-redux';
-
+import 'whatwg-fetch';
+import {deleteCallNumber} from '../../action';
 
 class OwnerBook extends React.Component {
 
-    deleteBook(book) {
+    async deleteCallNumber(book) {
+        let callNumberId = book.callNumber.id;
 
-        console.log(book);
+        let response = await fetch(`/v1/callNumbers?id=${callNumberId}`, {
+            credentials: 'include',
+            method: 'delete'
+        }).catch(handleError);
+
+        let body = await response.json();
+        this.props.deleteCallNumber(body);
     }
 
     handleBorrower(book){
@@ -40,7 +49,7 @@ class OwnerBook extends React.Component {
                 <p><span>{book.bookMeta.author}</span> | <span>{book.bookMeta.publisher}</span></p>
                 <p>읽고있어요 : {borrow} </p>
                 <p>읽고싶어요 : {reserver_list}</p>
-                <button className="button" onClick={this.deleteBook.bind(this, book)}>삭제하기</button>
+                <button className="button" onClick={this.deleteCallNumber.bind(this, book)}>삭제하기</button>
             </div>
         </li>)
     }
@@ -53,6 +62,10 @@ let mapStateToProps = (state) => {
     };
 };
 
-OwnerBook = connect(mapStateToProps)(OwnerBook);
+let mapDispatchToProps = (dispatch) => {
+    return {
+        deleteCallNumber: (callNumber) => dispatch(deleteCallNumber(callNumber))
+    };
+};
 
-export default OwnerBook;
+export default OwnerBook = connect(mapStateToProps, mapDispatchToProps)(OwnerBook);
