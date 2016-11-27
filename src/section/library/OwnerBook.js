@@ -3,11 +3,11 @@ import React from 'react';
 import {handleError} from '../../support/Ajax'
 import {connect} from 'react-redux';
 import 'whatwg-fetch';
-import {deleteCallNumber} from '../../action';
+import {deleteBook} from '../../action';
 
 class OwnerBook extends React.Component {
 
-    async deleteCallNumber(book) {
+    async deleteBook(book) {
         let callNumberId = book.callNumber.id;
 
         let response = await fetch(`/v1/callNumbers?id=${callNumberId}`, {
@@ -15,8 +15,8 @@ class OwnerBook extends React.Component {
             method: 'delete'
         }).catch(handleError);
 
-        let body = await response.json();
-        this.props.deleteCallNumber(body);
+        let callNumber = await response.json();
+        this.props.deleteBook(callNumber);
     }
 
     handleBorrower(book){
@@ -49,7 +49,7 @@ class OwnerBook extends React.Component {
                 <p><span>{book.bookMeta.author}</span> | <span>{book.bookMeta.publisher}</span></p>
                 <p>읽고있어요 : {borrow} </p>
                 <p>읽고싶어요 : {reserver_list}</p>
-                <button className="button" onClick={this.deleteCallNumber.bind(this, book)}>삭제하기</button>
+                <button className="button" onClick={this.deleteBook.bind(this, book)}>삭제하기</button>
             </div>
         </li>)
     }
@@ -64,7 +64,7 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        deleteCallNumber: (callNumber) => dispatch(deleteCallNumber(callNumber))
+        deleteBook: (callNumber) => dispatch(deleteBook(callNumber))
     };
 };
 

@@ -1,4 +1,11 @@
-import {AUTH, GET_BOOKS, ADD_BOOK, DELETE_CALLNUMBER} from '../action'
+import { AUTH, GET_BOOKS, 
+    OWNER_DELETE_BOOK, 
+    OWNER_ADD_BOOK, 
+    GUEST_RESERVE_BOOK,
+    GUEST_CANCEL_BOOK,
+    OWNER_BORROW_BOOK,
+    OWNER_RETURN_BOOK } from '../action'
+
 import {combineReducers} from 'redux'
 import {_} from 'underscore'
 
@@ -35,13 +42,13 @@ const shelves = (state = shelvesInitialState, action) => {
             return Object.assign({}, state, {
                 books: action.books
             });
-        case ADD_BOOK:
+        case OWNER_ADD_BOOK:
             return Object.assign({}, state, {
                 books: [...state.books,
                     action.book
                 ]
             });
-        case DELETE_CALLNUMBER:
+        case OWNER_DELETE_BOOK:
             return Object.assign({}, state, {
                 books: _.without(state.books, findCallNumberContain(state.books, action.callNumber))
             });
