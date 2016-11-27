@@ -5,4 +5,3 @@ export function parseJson(response) {
 export function handleError(err) {
     console.log(`get error, ${err}`);
 }
-

@@ -169,6 +169,18 @@ section .searchContainer button {
 	text-align: right;
 	margin: 10px;
 }
+.showMoreButtonContainer {
+	overflow: hidden;
+	margin: 10px 0px;
+	padding: 0px 60px;
+}
+
+#showMoreButton {
+	overflow: hidden;
+	margin: 10px 0px;
+	padding: 0px 10px;
+	width:100%;
+}
 
 .button {
 	background-color: #f0f0f0;
