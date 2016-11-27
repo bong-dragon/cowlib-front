@@ -54,7 +54,7 @@ const shelves = (state = shelvesInitialState, action) => {
             });
         case GUEST_RESERVE_BOOK:
             return Object.assign({}, state, {
-                books: reserveBook(state.books, action.reserveHistory)
+                books: reserveBook(state.books, action.reserveHistory, action.user)
             })
         default:
             return state;
@@ -67,17 +67,14 @@ function findCallNumberContain(books, callNumber) {
     })
 }
 
-function reserveBook(books, reserveHistory) {
+function reserveBook(books, reserveHistory, user) {
     for(var i in books) {
         if(books[i].callNumber.id === reserveHistory.callNumberId) {
             console.log(`책을 예약합니다 (book:${books[i].callNumber.id})`);
-            // if(books[i].reservers){
-            //     books[i].reservers.push(reserveHistory.reserverId);
-            // }
-            
+            books[i].reservers.push(user);
         }
     }
-    return books;
+    return Object.assign([], books);
 }
 
 const cowlib = combineReducers({

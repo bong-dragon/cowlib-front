@@ -16,14 +16,7 @@ class GuestBook extends React.Component {
         }).catch(handleError);
 
         let reserveHistory = await response.json();
-
-        if (book.reservers) {
-            book.reservers.push(this.props.user_id);
-        }else {
-            book.reservers = [this.props.user_id];
-        }
-        console.log(reserveHistory);
-        this.props.reserveBook(reserveHistory);
+        this.props.reserveBook(reserveHistory, this.props.user);
     }
 
     render() {
@@ -52,14 +45,15 @@ class GuestBook extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        user_id: state.auth.user_id
+        user_id: state.auth.user_id,
+        user: state.auth
     };
 };
 
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        reserveBook: (book) => dispatch(reserveBook(book))
+        reserveBook: (book, user) => dispatch(reserveBook(book, user))
     };
 };
 

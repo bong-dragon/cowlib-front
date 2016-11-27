@@ -49,10 +49,11 @@ export function addBook(book) {
     };
 }
 
-export function reserveBook(reserveHistory) {
+export function reserveBook(reserveHistory, user) {
     return {
         type: GUEST_RESERVE_BOOK,
-        reserveHistory: reserveHistory
+        reserveHistory: reserveHistory,
+        user: user
     };
 }
 
