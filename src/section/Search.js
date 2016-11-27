@@ -118,7 +118,9 @@ class Search extends React.Component {
                     {searchList}
                 </ul>
                 {this.isShowMorePossible() && (
-                    <button className="button" onClick={this.handleShowMore.bind(this)}>더보기</button>
+                    <div className="showMoreButtonContainer">
+                        <button className="button" id="showMoreButton" onClick={this.handleShowMore.bind(this)}>더보기</button>
+                    </div>
                 )}
             </section>
         )
