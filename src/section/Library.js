@@ -50,11 +50,13 @@ class Library extends React.Component {
             console.log(books);
             if (isOwner) {
                 books_ui = books.map(function (book, i) {
-                    return <OwnerBook key={i} book={book}/>
+                    let assignBook = Object.assign({}, book);
+                    return <OwnerBook key={i} book={assignBook}/>
                 });
             } else {
                 books_ui = books.map(function (book, i) {
-                    return <GuestBook key={i} book={book}/>
+                    let assignBook = Object.assign({}, book);
+                    return <GuestBook key={i} book={assignBook}/>
                 });
             }
         }

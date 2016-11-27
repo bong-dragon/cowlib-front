@@ -52,6 +52,10 @@ const shelves = (state = shelvesInitialState, action) => {
             return Object.assign({}, state, {
                 books: _.without(state.books, findCallNumberContain(state.books, action.callNumber))
             });
+        case GUEST_RESERVE_BOOK:
+            return Object.assign({}, state, {
+                books: reserveBook(state.books, action.reserveHistory, action.user)
+            })
         default:
             return state;
     }
@@ -61,6 +65,16 @@ function findCallNumberContain(books, callNumber) {
     return _.find(books, function (book) {
         return book.callNumber && book.callNumber.id === callNumber.id
     })
+}
+
+function reserveBook(books, reserveHistory, user) {
+    for(var i in books) {
+        if(books[i].callNumber.id === reserveHistory.callNumberId) {
+            console.log(`책을 예약합니다 (book:${books[i].callNumber.id})`);
+            books[i].reservers.push(user);
+        }
+    }
+    return Object.assign([], books);
 }
 
 const cowlib = combineReducers({
