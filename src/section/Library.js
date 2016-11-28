@@ -84,7 +84,7 @@ let mapDispatchToProps = (dispatch) => {
 
 let mapStateToProps = (state) => {
     return {
-        user_id: state.auth.user_id,
+        user_id: state.auth.id,
         books: state.shelves.books
     };
 };

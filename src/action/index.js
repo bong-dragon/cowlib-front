@@ -12,7 +12,7 @@ export const OWNER_RETURN_BOOK = "OWNER_RETURN_BOOK";
 export function getAuthInfo(body) {
     return {
         type: AUTH,
-        user_id: body.id,
+        id: body.id,
         facebook_id: body.facebookId,
         name: body.name,
         profile: body.profile
@@ -22,7 +22,7 @@ export function getAuthInfo(body) {
 export function logout(value) {
     return {
         type: AUTH,
-        user_id: null,
+        id: null,
         name: null,
         profile: null
     };
@@ -57,10 +57,11 @@ export function reserveBook(reserveHistory, user) {
     };
 }
 
-export function cancelBook(book) {
+export function cancelBook(reserveHistory, user) {
     return {
         type: GUEST_CANCEL_BOOK,
-        book: book
+        reserveHistory: reserveHistory,
+        user: user
     };
 }
 
