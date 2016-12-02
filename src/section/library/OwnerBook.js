@@ -4,6 +4,7 @@ import {handleError} from '../../support/Ajax'
 import {connect} from 'react-redux';
 import 'whatwg-fetch';
 import {deleteBook} from '../../action';
+import {Link} from 'react-router';
 
 class OwnerBook extends React.Component {
 
@@ -35,8 +36,13 @@ class OwnerBook extends React.Component {
         var book_img = book.bookMeta.coverUrl ? book.bookMeta.coverUrl : '/img/basic_book.png';
 
         var handleReserver = this.handleReserver.bind(this, book);
-        var reserver_list = book.reservers ? book.reservers.map(function (reserver, i) {
-            return (<button onClick={handleReserver} key={i}>{reserver.waiterId}</button>)
+        var pathname = this.props.pathname;
+
+        var reserver_list = book.reservers ? book.reservers.map( (reserver, i) => {
+            return (<Link key={i} to={{
+                    pathname: '/search',
+                    state: { modal: true, returnTo: pathname}
+                }}><img src={reserver.profile} /><span>{reserver.name}</span></Link>)
         }) : '';
         var borrow = book.borrower ? (<button onClick={this.handleBorrower.bind(this, book)}>{book.borrower.name}</button>) : '';
         

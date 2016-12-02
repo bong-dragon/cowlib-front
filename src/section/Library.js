@@ -45,13 +45,14 @@ class Library extends React.Component {
         let ownerId = this.props.params.ownerId;
         let userId = this.props.user_id;
         let isOwner = (userId && ownerId == userId) ? true : false;
+        let pathname = this.props.location.pathname;
 
         if (books.length > 0) {
             console.log(books);
             if (isOwner) {
                 books_ui = books.map(function (book, i) {
                     let assignBook = Object.assign({}, book);
-                    return <OwnerBook key={i} book={assignBook}/>
+                    return <OwnerBook pathname={pathname} key={i} book={assignBook}/>
                 });
             } else {
                 books_ui = books.map(function (book, i) {
@@ -66,7 +67,7 @@ class Library extends React.Component {
                 <div className="searchModalOpenButton">
                     {isOwner && (<Link to={{
                         pathname: '/search',
-                       state: { modal: true, returnTo: this.props.location.pathname }
+                   state: { modal: true, returnTo: pathname }
                     }}>추가하기</Link>)}
                 </div>
                 <ul className="books">
