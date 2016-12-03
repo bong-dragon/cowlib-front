@@ -64,8 +64,7 @@ class App extends React.Component {
             this.previousChildren
         );
 
-        return (
-            <div>
+        return (<div>
                 <Header/>
                 {isModal ? this.previousChildren : this.props.children}
                 {isModal && (
@@ -73,8 +72,7 @@ class App extends React.Component {
                         {this.props.children}
                     </Modal>
                 )}
-            </div>
-        )
+            </div>)
     }
 }
 

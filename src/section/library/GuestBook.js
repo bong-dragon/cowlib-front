@@ -50,7 +50,7 @@ class GuestBook extends React.Component {
 
         console.log(book);
         console.log(isReserved? "i'm": "not");
-        return (<li>
+        return (<li className="bookContainer">
             <div className="book_img">
                 <img className="book_img" src={book_img} alt={title}/>
             </div>

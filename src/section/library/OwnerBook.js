@@ -39,14 +39,16 @@ class OwnerBook extends React.Component {
         var pathname = this.props.pathname;
 
         var reserver_list = book.reservers ? book.reservers.map( (reserver, i) => {
+            let callNumberId = book.callNumber.id;
+            let reserverId = reserver.id;
             return (<Link key={i} to={{
-                    pathname: '/search',
+                    pathname: `/borrow/${callNumberId}/${reserverId}`,
                     state: { modal: true, returnTo: pathname}
-                }}><img src={reserver.profile} /><span>{reserver.name}</span></Link>)
+                }}><img  className="profile" src={reserver.profile} /><span>{reserver.name}</span></Link>)
         }) : '';
         var borrow = book.borrower ? (<button onClick={this.handleBorrower.bind(this, book)}>{book.borrower.name}</button>) : '';
         
-        return (<li>
+        return (<li className="bookContainer">
             <div className="book_img">
                 <img className="book_img" src={book_img} alt={title}/>
             </div>

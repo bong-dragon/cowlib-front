@@ -13,7 +13,7 @@ export default class SearchBook extends React.Component {
             <button className="button" onClick={this.props.onClick}>추가 하기</button>;
 
 
-        return (<li key={book.isbn}>
+        return (<li className="bookContainer" key={book.isbn}>
             <div className="book_img book_img_samll">
                 <img className="book_img book_img_samll" src={book_img} alt={book.coverUrl}/>
             </div>
