@@ -1,8 +1,8 @@
 import React from 'react';
 import 'whatwg-fetch';
-import SearchBook from '../library/SearchBook'
 import {Link} from 'react-router';
 import {parseJson, handleError} from '../../support/Ajax'
+import {borrowBook} from '../../action';
 import {_} from 'underscore'
 
 import {connect} from 'react-redux';
@@ -11,9 +11,39 @@ class Borrow extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            status: "BEFORE_BORROW"
+        };
+    }
+
+    borrowBook() {
+        let callNumberId  = this.props.params.callNumberId;
+        let borrowerId = this.props.params.reserverId;
+        console.log(borrowerId);
+        let url = `/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
+
+        fetch(url, {
+            credentials: 'include',
+            method: 'post'
+        }).then(parseJson)
+            .then((borrow) => {
+                this.setState({
+                    status: "AFTER_BORROW"
+                });
+
+                this.props.borrowBook(borrow);
+            })
+            .catch(handleError);
+    }
+
+    returnBook() {
+        let callNumberId  = this.props.params.callNumberId;
+        let borrowerId = this.props.params.reserverId;
+        console.log("빌려줌 취소")
     }
 
     render() {
+        console.log(this.state.status);
         let callNumberId  = this.props.params.callNumberId;
         let reserverId = this.props.params.reserverId;
         let books = this.props.books;
@@ -38,10 +68,37 @@ class Borrow extends React.Component {
         let bookMeta = book.bookMeta;
         let title = bookMeta.title.replace(/&lt;/g, "").replace(/&gt;/g, "");
         let book_img = bookMeta.coverUrl ? bookMeta.coverUrl : '/img/basic_book.png';
+        let result;
 
-        let reserver = _.find(book.reservers, function (one) {
-            return one.id && one.id == reserverId
-        })
+        if (this.state.status == "BEFORE_BORROW") {
+            let reserver = _.find(book.reservers, function (one) {
+                return one.id && one.id == reserverId
+            })
+
+            result = (<div>
+                        <p className="messageContainer">
+                            <img className="profile" src={reserver.profile} alt="profile"/>
+                            <span>{reserver.name}</span>
+                            <span> 에게 빌려주실 건가요?</span>
+                        </p>
+                        <p className="selectContainer">
+                            <button className="button button_small">아니요</button>
+                            <button className="button button_small" onClick={this.borrowBook.bind(this)}>네</button>
+                        </p>
+                    </div>);
+        }else {
+            let myLibrary = "/"+this.props.userId;
+            result = (<div>
+                        <p className="messageContainer">
+                           <span>빌려줌 상태로 바뀌었습니다.</span>
+                        </p>
+                        <p className="selectContainer">
+                            <button className="button button_small" onClick={this.returnBook.bind(this)}>빌려줌 취소</button>
+                            <button className="button button_small"><Link to={myLibrary}>내도서관</Link></button>
+                        </p>
+                    </div>)
+        }
+
 
         return (<section className="borrowContainer">
                     <div className="bookContainer">
@@ -53,21 +110,14 @@ class Borrow extends React.Component {
                             <p><span>{bookMeta.author}</span> | <span>{bookMeta.publisher}</span></p>
                         </div>
                     </div>
-                    <p className="messageContainer">
-                        <img className="profile" src={reserver.profile} alt="profile"/>
-                        <span>{reserver.name}</span>
-                        <span> 에게 빌려주실 건가요?</span>
-                    </p>
-                    <p className="selectContainer">
-                        <button className="button button_small">네</button>
-                        <button className="button button_small">아니요</button>
-                    </p>
+                    {result}
                 </section>);
     }
 }
 
 let mapDispatchToProps = (dispatch) => {
     return {
+        borrowBook: (borrow) => dispatch(borrowBook(borrow))
     };
 };
 

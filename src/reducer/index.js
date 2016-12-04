@@ -52,6 +52,10 @@ const shelves = (state = shelvesInitialState, action) => {
             return Object.assign({}, state, {
                 books: _.without(state.books, findCallNumberContain(state.books, action.callNumber))
             });
+        case OWNER_BORROW_BOOK:
+            return Object.assign({}, state, {
+                books: borrowBook(state.books, action.borrow)
+            })
         case GUEST_RESERVE_BOOK:
             return Object.assign({}, state, {
                 books: reserveBook(state.books, action.reserveHistory, action.user)
@@ -70,6 +74,25 @@ function findCallNumberContain(books, callNumber) {
         return book.callNumber && book.callNumber.id === callNumber.id
     })
 }
+
+function borrowBook(books, borrow) {
+    console.log(borrow);
+    for(var i in books) {
+        if(books[i].callNumber.id === borrow.callNumberId) {
+            console.log(`책을 빌려줍니다. (book:${books[i].callNumber.id})`);
+            let reservers = books[i].reservers;
+            let reserver = _.find(reservers, function (reserver) {
+                            return reserver.id && reserver.id == borrow.borrowerId
+                        });
+            console.log(reserver);
+            books[i].reservers = _.without(reservers, reserver)
+            books[i].borrower = reserver;
+            console.log(books[i]);
+        }
+    }
+    return Object.assign([], books);
+}
+
 
 function reserveBook(books, reserveHistory, user) {
     for(var i in books) {
