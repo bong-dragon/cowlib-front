@@ -11,7 +11,7 @@ import {_} from 'underscore'
 
 // local db
 const authInitialState = {
-    user_id: 0,
+    id: 0,
     facebook_id: "",
     name: "",
     profile: ""
@@ -26,7 +26,7 @@ const auth = (state = authInitialState, action) => {
     switch (action.type) {
         case AUTH:
             return Object.assign({}, state, {
-                user_id: action.user_id,
+                id: action.id,
                 facebook_id: action.facebook_id,
                 name: action.name,
                 profile: action.profile
@@ -56,6 +56,10 @@ const shelves = (state = shelvesInitialState, action) => {
             return Object.assign({}, state, {
                 books: reserveBook(state.books, action.reserveHistory, action.user)
             })
+        case GUEST_CANCEL_BOOK:
+            return Object.assign({}, state, {
+                books: cancelBook(state.books, action.reserveHistory, action.user)
+            })
         default:
             return state;
     }
@@ -75,6 +79,19 @@ function reserveBook(books, reserveHistory, user) {
         }
     }
     return Object.assign([], books);
+}
+
+function cancelBook(books, reserveHistory, user) {
+   for(var i in books) {
+       if(books[i].callNumber.id === reserveHistory.callNumberId) {
+           console.log(`책 예약을 취소합니다. (book:${books[i].callNumber.id})`);
+           let reservers = books[i].reservers;
+           books[i].reservers = _.without(reservers, _.find(reservers, function (reserver) {
+               return reserver.id === user.id;
+           }));
+       }
+   }
+   return Object.assign([], books);
 }
 
 const cowlib = combineReducers({

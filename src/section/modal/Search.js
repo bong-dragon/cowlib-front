@@ -1,8 +1,8 @@
 import React from 'react';
 import 'whatwg-fetch';
-import SearchBook from './library/SearchBook'
-import {parseJson, handleError} from '../support/Ajax'
-import {addBook} from '../action';
+import SearchBook from '../library/SearchBook'
+import {parseJson, handleError} from '../../support/Ajax'
+import {addBook} from '../../action';
 import {_} from 'underscore'
 
 import {connect} from 'react-redux';

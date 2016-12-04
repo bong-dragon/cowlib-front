@@ -7,7 +7,8 @@ import cowlib from './reducer';
 import App from './App';
 import Library from './section/Library';
 import Main from './section/Main';
-import Search from './section/Search';
+import Search from './section/modal/Search';
+import Borrow from './section/modal/Borrow';
 
 import {Router, Route, browserHistory, IndexRoute} from 'react-router'
 
@@ -20,6 +21,7 @@ ReactDOM.render((
             <Route path="/" component={App}>
                 <IndexRoute component={Main}/>
                 <Route path="search" component={Search}/>
+                <Route path="borrow/:callNumberId/:reserverId" component={Borrow}/>
                 <Route path=":ownerId" component={Library}/>
             </Route>
         </Router>

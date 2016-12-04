@@ -4,6 +4,7 @@ import {handleError} from '../../support/Ajax'
 import {connect} from 'react-redux';
 import 'whatwg-fetch';
 import {deleteBook} from '../../action';
+import {Link} from 'react-router';
 
 class OwnerBook extends React.Component {
 
@@ -35,12 +36,19 @@ class OwnerBook extends React.Component {
         var book_img = book.bookMeta.coverUrl ? book.bookMeta.coverUrl : '/img/basic_book.png';
 
         var handleReserver = this.handleReserver.bind(this, book);
-        var reserver_list = book.reservers ? book.reservers.map(function (reserver, i) {
-            return (<button onClick={handleReserver} key={i}>{reserver.waiterId}</button>)
+        var pathname = this.props.pathname;
+
+        var reserver_list = book.reservers ? book.reservers.map( (reserver, i) => {
+            let callNumberId = book.callNumber.id;
+            let reserverId = reserver.id;
+            return (<Link key={i} to={{
+                    pathname: `/borrow/${callNumberId}/${reserverId}`,
+                    state: { modal: true, returnTo: pathname}
+                }}><img  className="profile" src={reserver.profile} /><span>{reserver.name}</span></Link>)
         }) : '';
         var borrow = book.borrower ? (<button onClick={this.handleBorrower.bind(this, book)}>{book.borrower.name}</button>) : '';
         
-        return (<li>
+        return (<li className="bookContainer">
             <div className="book_img">
                 <img className="book_img" src={book_img} alt={title}/>
             </div>
@@ -58,7 +66,7 @@ class OwnerBook extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        user_id: state.auth.user_id
+        user_id: state.auth.id
     };
 };
 

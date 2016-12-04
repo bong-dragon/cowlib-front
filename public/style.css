@@ -80,7 +80,7 @@ section .guide {
 	width: 100%;
 }
 
-section .books > li{
+.bookContainer {
 	overflow: hidden;
 	margin: 0 10px;
 	padding: 10px 0;
@@ -88,21 +88,21 @@ section .books > li{
 	border-bottom: 1px solid #eee;
 }
 
-section .books li .info {
+.bookContainer .info {
 	float: left;
 	width: 213px;
 	padding-left: 20px;
 	line-height: 24px;
 }
 
-section .books li .book_title {
+.bookContainer .book_title {
 	color: #3774B1;
 	font-weight: bold;
 	font-size: 16px;
 }
 
 
-section .books li .book_img {
+.bookContainer .book_img {
 	float: left;
 	width: 77px;
 	height: auto;
@@ -110,14 +110,14 @@ section .books li .book_img {
 	background-size: contain;
 	background-position: center center;
 }
-section .books li .book_img  img{
+.bookContainer .book_img  img{
 	max-height: 112px;
 	max-width: 77px;
 	 /*max-height: 92%; */
 	 /*max-width: 92%; */
 }
 
-section .books li .book_img_samll {
+.bookContainer .book_img_samll {
 	width: 67px;
 }
 
@@ -153,7 +153,7 @@ section .searchContainer button {
 	padding-top: 10px;
 }
 
-.modalContainer section .books li .info {
+.modalContainer .bookContainer .info {
 	float: left;
 	width: 146px;
 	padding-left: 13px;
@@ -175,6 +175,18 @@ section .searchContainer button {
 	padding: 0px 60px;
 }
 
+.borrowContainer .messageContainer {
+	padding: 10px;
+}
+
+.borrowContainer .messageContainer > *{
+	margin: 0px 1px;
+}
+
+.selectContainer {
+	text-align: center;
+}
+
 #showMoreButton {
 	overflow: hidden;
 	margin: 10px 0px;
@@ -191,4 +203,9 @@ section .searchContainer button {
     margin: 0.25em;
     padding: 0 1em;
     width: 58%;
+}
+
+.button_small {
+	width: 27%;
+	font-size: 10px;
 }
