@@ -20,12 +20,16 @@ class Borrow extends React.Component {
 
         if (books.length == 0) {
             if (this.props.userId) {
-                // loading
+                let pathname = "/"+this.props.userId;
+                // 나중에 로딩중 표시 하고, 서버 갔다오면 좋을듯!
+                return (<section>
+                        <p>잘못된 경로로 접근하셨습니다</p>
+                        <Link to={pathname}>내 도서관으로</Link></section>);
             }else {
-                // 로그인 하세요.
+                return (<section>
+                        <p>잘못된 경로로 접근하셨습니다</p>
+                        <Link to="/">홈으로</Link></section>);
             }
-            console.log("no books");
-            return (<section><Link to="/">홈으로</Link></section>);
         }
 
         let book = _.find(books, function (one) {
@@ -39,9 +43,7 @@ class Borrow extends React.Component {
             return one.id && one.id == reserverId
         })
 
-        let message = `위 책을 ${reserver.name} 에게 빌려주실 건가요?`
-        return (
-                <section className="borrowContainer">
+        return (<section className="borrowContainer">
                     <div className="bookContainer">
                         <div className="book_img book_img_samll">
                             <img className="book_img book_img_samll" src={book_img} alt={bookMeta.coverUrl}/>
@@ -52,7 +54,6 @@ class Borrow extends React.Component {
                         </div>
                     </div>
                     <p className="messageContainer">
-                        <span>위 책을 </span>
                         <img className="profile" src={reserver.profile} alt="profile"/>
                         <span>{reserver.name}</span>
                         <span> 에게 빌려주실 건가요?</span>
@@ -61,10 +62,7 @@ class Borrow extends React.Component {
                         <button className="button button_small">네</button>
                         <button className="button button_small">아니요</button>
                     </p>
-                </section>
-                    );
-
-     
+                </section>);
     }
 }
 
