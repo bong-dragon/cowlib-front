@@ -73,7 +73,7 @@ class Borrow extends React.Component {
         if (this.state.status == "BEFORE_BORROW") {
             let reserver = _.find(book.reservers, function (one) {
                 return one.id && one.id == reserverId
-            })
+            });
 
             result = (<div>
                         <p className="messageContainer">

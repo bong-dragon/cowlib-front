@@ -72,9 +72,9 @@ export function borrowBook(borrow) {
     };
 }
 
-export function returnBook(book) {
+export function returnBook(borrow) {
     return {
         type: OWNER_RETURN_BOOK,
-        book: book
+        borrow: borrow
     };
 }
