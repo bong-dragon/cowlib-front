@@ -43,9 +43,9 @@ router.delete('/callNumbers', (req, res) => {
 });
 
 router.post('/callNumbers/:callNumberId/borrow', (req, res) => {
-    let user = req.cookies["cowlib-user"];
+    // let ownerId = req.cookies["cowlib-user"];
+    let borrowerId = req.query.borrowerId? req.query.borrowerId: '';
     let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
-    let borrowerId = user? user.id : '';
     
     let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
     console.log(`url: ${url}`);

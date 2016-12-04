@@ -65,10 +65,10 @@ export function cancelBook(reserveHistory, user) {
     };
 }
 
-export function borrowBook(book) {
+export function borrowBook(borrow) {
     return {
         type: OWNER_BORROW_BOOK,
-        book: book
+        borrow: borrow
     };
 }
 
