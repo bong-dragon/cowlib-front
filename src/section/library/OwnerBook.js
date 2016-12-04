@@ -20,12 +20,12 @@ class OwnerBook extends React.Component {
         this.props.deleteBook(callNumber);
     }
 
-    handleBorrower(book){
+    handleBorrower(book) {
         console.log("반납 처리 하시겠습니까?");
         console.log(book);
     }
 
-    handleReserver(book){
+    handleReserver(book) {
         console.log("빌려주실 건가요?");
         console.log(book);
     }
@@ -38,16 +38,24 @@ class OwnerBook extends React.Component {
         var handleReserver = this.handleReserver.bind(this, book);
         var pathname = this.props.pathname;
 
-        var reserver_list = book.reservers ? book.reservers.map( (reserver, i) => {
+        var reserver_list = book.reservers ? book.reservers.map((reserver, i) => {
             let callNumberId = book.callNumber.id;
             let reserverId = reserver.id;
             return (<Link key={i} to={{
-                    pathname: `/borrow/${callNumberId}/${reserverId}`,
-                    state: { modal: true, returnTo: pathname}
-                }}><img  className="profile" src={reserver.profile} /><span>{reserver.name}</span></Link>)
+                pathname: `/borrow/${callNumberId}/${reserverId}`,
+                state: {modal: true, returnTo: pathname}
+            }}><img className="profile" src={reserver.profile}/><span>{reserver.name}</span></Link>)
         }) : '';
-        var borrow = book.borrower ? (<button onClick={this.handleBorrower.bind(this, book)}>{book.borrower.name}</button>) : '';
-        
+
+        let borrower = book.borrower ? (() => {
+            let callNumberId = book.callNumber.id;
+            let borrowerId = book.borrower.id;
+            return (<Link to={{
+                pathname: `/returnBook/${callNumberId}/${borrowerId}`,
+                state: {modal: true, returnTo: pathname}
+            }}><img className="profile" src={book.borrower.profile}/><span>{book.borrower.name}</span></Link>)
+        })() : "";
+
         return (<li className="bookContainer">
             <div className="book_img">
                 <img className="book_img" src={book_img} alt={title}/>
@@ -55,7 +63,7 @@ class OwnerBook extends React.Component {
             <div className="info">
                 <p dangerouslySetInnerHTML={{__html: title}} className="book_title"/>
                 <p><span>{book.bookMeta.author}</span> | <span>{book.bookMeta.publisher}</span></p>
-                <p>읽고있어요 : {borrow} </p>
+                <p>읽고있어요 : {borrower} </p>
                 <p>읽고싶어요 : {reserver_list}</p>
                 <button className="button" onClick={this.deleteBook.bind(this, book)}>삭제하기</button>
             </div>

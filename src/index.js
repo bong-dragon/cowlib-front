@@ -9,6 +9,7 @@ import Library from './section/Library';
 import Main from './section/Main';
 import Search from './section/modal/Search';
 import Borrow from './section/modal/Borrow';
+import ReturnBook from './section/modal/ReturnBook';
 
 import {Router, Route, browserHistory, IndexRoute} from 'react-router'
 
@@ -22,6 +23,7 @@ ReactDOM.render((
                 <IndexRoute component={Main}/>
                 <Route path="search" component={Search}/>
                 <Route path="borrow/:callNumberId/:reserverId" component={Borrow}/>
+                <Route path="returnBook/:callNumberId/:borrowerId" component={ReturnBook}/>
                 <Route path=":ownerId" component={Library}/>
             </Route>
         </Router>

@@ -55,15 +55,19 @@ const shelves = (state = shelvesInitialState, action) => {
         case OWNER_BORROW_BOOK:
             return Object.assign({}, state, {
                 books: borrowBook(state.books, action.borrow)
-            })
+            });
+        case OWNER_RETURN_BOOK:
+            return Object.assign({}, state, {
+                books: returnBook(state.books, action.borrow)
+            });
         case GUEST_RESERVE_BOOK:
             return Object.assign({}, state, {
                 books: reserveBook(state.books, action.reserveHistory, action.user)
-            })
+            });
         case GUEST_CANCEL_BOOK:
             return Object.assign({}, state, {
                 books: cancelBook(state.books, action.reserveHistory, action.user)
-            })
+            });
         default:
             return state;
     }
@@ -93,6 +97,20 @@ function borrowBook(books, borrow) {
     return Object.assign([], books);
 }
 
+function returnBook(books, borrow) {
+    console.log(borrow);
+    for(var i in books) {
+        if(books[i].callNumber.id === borrow.callNumberId) {
+            console.log(`책을 반납합니다. (book:${books[i].callNumber.id})`);
+            let borrower = books[i].borrower;
+
+            console.log(borrower);
+            books[i].borrower = null;
+            console.log(books[i]);
+        }
+    }
+    return Object.assign([], books);
+}
 
 function reserveBook(books, reserveHistory, user) {
     for(var i in books) {
