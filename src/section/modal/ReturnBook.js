@@ -38,6 +38,7 @@ class ReturnBook extends React.Component {
     }
 
     createActionWrapper(borrower) {
+        let returnTo = this.props.returnTo;
         if (this.state.status === "BEFORE_RETURN") {
             return (<div>
                 <p className="messageContainer">
@@ -46,19 +47,18 @@ class ReturnBook extends React.Component {
                     <span> 에게 책을 돌려받으셨나요?</span>
                 </p>
                 <p className="selectContainer">
+                    <button className="button button_small"><Link to={returnTo}>아니요</Link></button>
                     <button className="button button_small" onClick={this.returnBook.bind(this)}>네</button>
-                    <button className="button button_small">아니요</button>
                 </p>
             </div>);
         } else {
-            let myLibrary = "/" + this.props.userId;
             return (<div>
                 <p className="messageContainer">
                     <span>반납함 상태로 바뀌었습니다.</span>
                 </p>
                 <p className="selectContainer">
                     <button className="button button_small">반납함 취소</button>
-                    <button className="button button_small"><Link to={myLibrary}>내도서관</Link></button>
+                    <button className="button button_small"><Link to={returnTo}>돌아가기</Link></button>
                 </p>
             </div>);
         }

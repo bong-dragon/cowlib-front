@@ -22,7 +22,7 @@ const Modal = React.createClass({
         return (
             <div className="modalContainer" style={this.styles}>
                 <p className="backButton"><Link to={this.props.returnTo}>Back</Link></p>
-                {this.props.children}
+                {React.cloneElement(this.props.children, {...this.props})}
             </div>
         )
     }

@@ -48,19 +48,12 @@ class Borrow extends React.Component {
         let callNumberId = this.props.params.callNumberId;
         let reserverId = this.props.params.reserverId;
         let books = this.props.books;
+        let returnTo = this.props.returnTo ? this.props.returnTo : "/";
 
         if (books.length == 0) {
-            if (this.props.userId) {
-                let pathname = "/" + this.props.userId;
-                // 나중에 로딩중 표시 하고, 서버 갔다오면 좋을듯!
-                return (<section>
-                    <p>잘못된 경로로 접근하셨습니다</p>
-                    <Link to={pathname}>내 도서관으로</Link></section>);
-            } else {
-                return (<section>
-                    <p>잘못된 경로로 접근하셨습니다</p>
-                    <Link to="/">홈으로</Link></section>);
-            }
+            return (<section>
+                <p>잘못된 경로로 접근하셨습니다</p>
+                <Link to={returnTo}>돌아가기</Link></section>);
         }
 
         let book = _.find(books, function (book) {
@@ -87,6 +80,7 @@ class Borrow extends React.Component {
     }
 
     createActionWrapper(book, reserverId) {
+        let returnTo = this.props.returnTo;
         if (this.state.status === "BEFORE_BORROW") {
             let reserver = _.find(book.reservers, function (reserver) {
                 return reserver.id && reserver.id == reserverId
@@ -98,19 +92,18 @@ class Borrow extends React.Component {
                     <span> 에게 빌려주실 건가요?</span>
                 </p>
                 <p className="selectContainer">
-                    <button className="button button_small">아니요</button>
+                    <button className="button button_small"><Link to={returnTo}>아니요</Link></button>
                     <button className="button button_small" onClick={this.borrowBook.bind(this)}>네</button>
                 </p>
             </div>);
         } else {
-            let myLibrary = "/" + this.props.userId;
             return (<div>
                 <p className="messageContainer">
                     <span>빌려줌 상태로 바뀌었습니다.</span>
                 </p>
                 <p className="selectContainer">
                     <button className="button button_small" onClick={this.returnBook.bind(this)}>빌려줌 취소</button>
-                    <button className="button button_small"><Link to={myLibrary}>내도서관</Link></button>
+                    <button className="button button_small"><Link to={returnTo}>돌아가기</Link></button>
                 </p>
             </div>)
         }
