@@ -5,7 +5,8 @@ import {
     GUEST_RESERVE_BOOK,
     GUEST_CANCEL_BOOK,
     OWNER_BORROW_BOOK,
-    OWNER_RETURN_BOOK
+    OWNER_RETURN_BOOK,
+    OWNER_BORROW_AGAIN_BOOK
 } from '../action'
 
 import {combineReducers} from 'redux'
@@ -62,6 +63,10 @@ const shelves = (state = shelvesInitialState, action) => {
             return Object.assign({}, state, {
                 books: returnBook(state.books, action.borrow)
             });
+        case OWNER_BORROW_AGAIN_BOOK:
+            return Object.assign({}, state, {
+                books: borrowAgainBook(state.books, action.borrow, action.borrower)
+            });
         case GUEST_RESERVE_BOOK:
             return Object.assign({}, state, {
                 books: reserveBook(state.books, action.reserveHistory, action.user)
@@ -91,6 +96,17 @@ function borrowBook(books, borrow) {
             });
             books[i].reservers = _.without(reservers, reserver)
             books[i].borrower = reserver;
+            books[i].borrower.status = "OWNER_BORROW_BOOK";
+        }
+    }
+    return Object.assign([], books);
+}
+
+function borrowAgainBook(books, borrow) {
+    for (var i in books) {
+        if (books[i].callNumber.id === borrow.callNumberId) {
+            books[i].borrower.status = "OWNER_BORROW_BOOK";
+            break;
         }
     }
     return Object.assign([], books);
@@ -100,7 +116,7 @@ function returnBook(books, borrow) {
     for (var i in books) {
         if (books[i].callNumber.id === borrow.callNumberId) {
             console.log(`책을 반납합니다. (book:${books[i].callNumber.id})`);
-            books[i].borrower = null;
+            books[i].borrower.status = "OWNER_RETURN_BOOK";
         }
     }
     return Object.assign([], books);

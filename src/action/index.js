@@ -8,6 +8,8 @@ export const GUEST_RESERVE_BOOK = "GUEST_RESERVE_BOOK";
 export const GUEST_CANCEL_BOOK = "GUEST_CANCEL_BOOK";
 export const OWNER_BORROW_BOOK = "OWNER_BORROW_BOOK";
 export const OWNER_RETURN_BOOK = "OWNER_RETURN_BOOK";
+export const OWNER_BORROW_AGAIN_BOOK = "OWNER_BORROW_AGAIN_BOOK";
+
 
 export function getAuthInfo(body) {
     return {
@@ -75,6 +77,13 @@ export function borrowBook(borrow) {
 export function returnBook(borrow) {
     return {
         type: OWNER_RETURN_BOOK,
+        borrow: borrow
+    };
+}
+
+export function borrowAgainBook(borrow) {
+    return {
+        type: OWNER_BORROW_AGAIN_BOOK,
         borrow: borrow
     };
 }
