@@ -5,7 +5,7 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {_} from 'underscore'
 
-import {returnBook} from '../../action';
+import {returnBook, borrowBook} from '../../action';
 import {parseJson, handleError} from '../../support/Ajax'
 
 
@@ -37,6 +37,27 @@ class ReturnBook extends React.Component {
             .catch(handleError);
     }
 
+    borrowBook() {
+        let callNumberId = this.props.params.callNumberId;
+        let borrowerId = this.props.params.borrowerId;
+
+        let url = `/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
+
+        fetch(url, {
+            credentials: 'include',
+            method: 'post'
+        }).then(parseJson)
+            .then((borrow) => {
+                console.log(borrow);
+                this.setState({
+                    status: "BEFORE_RETURN"
+                });
+
+                this.props.borrowBook(borrow);
+            })
+            .catch(handleError);
+    }
+
     createActionWrapper(borrower) {
         let returnTo = this.props.returnTo;
         if (this.state.status === "BEFORE_RETURN") {
@@ -57,7 +78,7 @@ class ReturnBook extends React.Component {
                     <span>반납함 상태로 바뀌었습니다.</span>
                 </p>
                 <p className="selectContainer">
-                    <button className="button button_small">반납함 취소</button>
+                    <button className="button button_small" onClick={this.borrowBook.bind(this)}>반납함 취소</button>
                     <button className="button button_small"><Link to={returnTo}>돌아가기</Link></button>
                 </p>
             </div>);
@@ -110,7 +131,8 @@ class ReturnBook extends React.Component {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        returnBook: (borrow) => dispatch(returnBook(borrow))
+        returnBook: (borrow) => dispatch(returnBook(borrow)),
+        borrowBook: (borrow) => dispatch(borrowBook(borrow))
     };
 };
 
