@@ -1,10 +1,12 @@
-import { AUTH, GET_BOOKS, 
-    OWNER_DELETE_BOOK, 
-    OWNER_ADD_BOOK, 
+import {
+    AUTH, GET_BOOKS,
+    OWNER_DELETE_BOOK,
+    OWNER_ADD_BOOK,
     GUEST_RESERVE_BOOK,
     GUEST_CANCEL_BOOK,
     OWNER_BORROW_BOOK,
-    OWNER_RETURN_BOOK } from '../action'
+    OWNER_RETURN_BOOK
+} from '../action'
 
 import {combineReducers} from 'redux'
 import {_} from 'underscore'
@@ -80,41 +82,33 @@ function findCallNumberContain(books, callNumber) {
 }
 
 function borrowBook(books, borrow) {
-    console.log(borrow);
-    for(var i in books) {
-        if(books[i].callNumber.id === borrow.callNumberId) {
+    for (var i in books) {
+        if (books[i].callNumber.id === borrow.callNumberId) {
             console.log(`책을 빌려줍니다. (book:${books[i].callNumber.id})`);
             let reservers = books[i].reservers;
             let reserver = _.find(reservers, function (reserver) {
-                            return reserver.id && reserver.id == borrow.borrowerId
-                        });
-            console.log(reserver);
+                return reserver.id && reserver.id == borrow.borrowerId
+            });
             books[i].reservers = _.without(reservers, reserver)
             books[i].borrower = reserver;
-            console.log(books[i]);
         }
     }
     return Object.assign([], books);
 }
 
 function returnBook(books, borrow) {
-    console.log(borrow);
-    for(var i in books) {
-        if(books[i].callNumber.id === borrow.callNumberId) {
+    for (var i in books) {
+        if (books[i].callNumber.id === borrow.callNumberId) {
             console.log(`책을 반납합니다. (book:${books[i].callNumber.id})`);
-            let borrower = books[i].borrower;
-
-            console.log(borrower);
             books[i].borrower = null;
-            console.log(books[i]);
         }
     }
     return Object.assign([], books);
 }
 
 function reserveBook(books, reserveHistory, user) {
-    for(var i in books) {
-        if(books[i].callNumber.id === reserveHistory.callNumberId) {
+    for (var i in books) {
+        if (books[i].callNumber.id === reserveHistory.callNumberId) {
             console.log(`책을 예약합니다 (book:${books[i].callNumber.id})`);
             books[i].reservers.push(user);
         }
@@ -123,16 +117,16 @@ function reserveBook(books, reserveHistory, user) {
 }
 
 function cancelBook(books, reserveHistory, user) {
-   for(var i in books) {
-       if(books[i].callNumber.id === reserveHistory.callNumberId) {
-           console.log(`책 예약을 취소합니다. (book:${books[i].callNumber.id})`);
-           let reservers = books[i].reservers;
-           books[i].reservers = _.without(reservers, _.find(reservers, function (reserver) {
-               return reserver.id === user.id;
-           }));
-       }
-   }
-   return Object.assign([], books);
+    for (var i in books) {
+        if (books[i].callNumber.id === reserveHistory.callNumberId) {
+            console.log(`책 예약을 취소합니다. (book:${books[i].callNumber.id})`);
+            let reservers = books[i].reservers;
+            books[i].reservers = _.without(reservers, _.find(reservers, function (reserver) {
+                return reserver.id === user.id;
+            }));
+        }
+    }
+    return Object.assign([], books);
 }
 
 const cowlib = combineReducers({

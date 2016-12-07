@@ -1,11 +1,13 @@
 import React from 'react';
+
 import 'whatwg-fetch';
 import {Link} from 'react-router';
+import {connect} from 'react-redux';
 import {_} from 'underscore'
+
 import {returnBook} from '../../action';
 import {parseJson, handleError} from '../../support/Ajax'
 
-import {connect} from 'react-redux';
 
 class ReturnBook extends React.Component {
 
@@ -16,7 +18,7 @@ class ReturnBook extends React.Component {
         };
     }
 
-    async handleSubmit(e) {
+    returnBook() {
         let callNumberId = this.props.params.callNumberId;
         let borrowerId = this.props.params.borrowerId;
 
@@ -27,15 +29,39 @@ class ReturnBook extends React.Component {
             method: 'delete'
         }).then(parseJson)
             .then((borrow) => {
-                console.log(borrow);
-
                 this.setState({
                     status: "AFTER_RETURN"
                 });
-
                 this.props.returnBook(borrow);
             })
             .catch(handleError);
+    }
+
+    createActionWrapper(borrower) {
+        if (this.state.status === "BEFORE_RETURN") {
+            return (<div>
+                <p className="messageContainer">
+                    <img className="profile" src={borrower.profile} alt="profile"/>
+                    <span>{borrower.name}</span>
+                    <span> 에게 책을 돌려받으셨나요?</span>
+                </p>
+                <p className="selectContainer">
+                    <button className="button button_small" onClick={this.returnBook.bind(this)}>네</button>
+                    <button className="button button_small">아니요</button>
+                </p>
+            </div>);
+        } else {
+            let myLibrary = "/" + this.props.userId;
+            return (<div>
+                <p className="messageContainer">
+                    <span>반납함 상태로 바뀌었습니다.</span>
+                </p>
+                <p className="selectContainer">
+                    <button className="button button_small">반납함 취소</button>
+                    <button className="button button_small"><Link to={myLibrary}>내도서관</Link></button>
+                </p>
+            </div>);
+        }
     }
 
     render() {
@@ -57,52 +83,27 @@ class ReturnBook extends React.Component {
             }
         }
 
-        let book = _.find(books, function (one) {
-            return one.callNumber && one.callNumber.id == callNumberId
+        let book = _.find(books, function (book) {
+            return book.callNumber && book.callNumber.id == callNumberId
         });
         let bookMeta = book.bookMeta;
-        let title = bookMeta.title.replace(/&lt;/g, "").replace(/&gt;/g, "");
-        let book_img = bookMeta.coverUrl ? bookMeta.coverUrl : '/img/basic_book.png';
-
         let borrower = book.borrower;
+        let title = bookMeta.title.replace(/&lt;/g, "").replace(/&gt;/g, "");
+        let bookImage = bookMeta.coverUrl ? bookMeta.coverUrl : '/img/basic_book.png';
 
-        let result;
-        if (this.state.status == "BEFORE_RETURN") {
-            result = (<div>
-                <p className="messageContainer">
-                    <img className="profile" src={borrower.profile} alt="profile"/>
-                    <span>{borrower.name}</span>
-                    <span> 에게 책을 돌려받으셨나요?</span>
-                </p>
-                <p className="selectContainer">
-                    <button className="button button_small" onClick={this.handleSubmit.bind(this)}>네</button>
-                    <button className="button button_small">아니요</button>
-                </p>
-            </div>);
-        } else {
-            let myLibrary = "/"+this.props.userId;
-            result = (<div>
-                <p className="messageContainer">
-                    <span>반납함 상태로 바뀌었습니다.</span>
-                </p>
-                <p className="selectContainer">
-                    <button className="button button_small">반납함 취소</button>
-                    <button className="button button_small"><Link to={myLibrary}>내도서관</Link></button>
-                </p>
-            </div>);
-        }
+        let actionWrapper = this.createActionWrapper(borrower);
 
         return (<section className="borrowContainer">
             <div className="bookContainer">
                 <div className="book_img book_img_samll">
-                    <img className="book_img book_img_samll" src={book_img} alt={bookMeta.coverUrl}/>
+                    <img className="book_img book_img_samll" src={bookImage} alt={bookMeta.coverUrl}/>
                 </div>
                 <div className="info">
                     <p dangerouslySetInnerHTML={{__html: title}}/>
                     <p><span>{bookMeta.author}</span> | <span>{bookMeta.publisher}</span></p>
                 </div>
             </div>
-            {result}
+            {actionWrapper}
         </section>);
     }
 }
