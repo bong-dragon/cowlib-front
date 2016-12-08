@@ -5,9 +5,8 @@ import {Link} from 'react-router';
 import {connect} from 'react-redux';
 import {_} from 'underscore'
 
-import {returnBook, borrowAgainBook} from '../../action';
+import {returnBook, cancelReturnBook} from '../../action';
 import {parseJson, handleError} from '../../support/Ajax'
-
 
 class ReturnBook extends React.Component {
 
@@ -26,7 +25,7 @@ class ReturnBook extends React.Component {
 
         fetch(url, {
             credentials: 'include',
-            method: 'delete'
+            method: 'put'
         }).then(parseJson)
             .then((borrow) => {
                 this.setState({
@@ -37,7 +36,7 @@ class ReturnBook extends React.Component {
             .catch(handleError);
     }
 
-    borrowAgainBook() {
+    cancelReturnBook() {
         let callNumberId = this.props.params.callNumberId;
         let borrowerId = this.props.params.borrowerId;
 
@@ -52,7 +51,7 @@ class ReturnBook extends React.Component {
                     status: "BEFORE_RETURN"
                 });
 
-                this.props.borrowAgainBook(borrow);
+                this.props.cancelReturnBook(borrow);
             })
             .catch(handleError);
     }
@@ -77,7 +76,7 @@ class ReturnBook extends React.Component {
                     <span>반납함 상태로 바뀌었습니다.</span>
                 </p>
                 <p className="selectContainer">
-                    <button className="button button_small" onClick={this.borrowAgainBook.bind(this)}>반납함 취소</button>
+                    <button className="button button_small" onClick={this.cancelReturnBook.bind(this)}>반납함 취소</button>
                     <button className="button button_small"><Link to={returnTo}>돌아가기</Link></button>
                 </p>
             </div>);
@@ -131,7 +130,7 @@ class ReturnBook extends React.Component {
 let mapDispatchToProps = (dispatch) => {
     return {
         returnBook: (borrow) => dispatch(returnBook(borrow)),
-        borrowAgainBook: (borrow) => dispatch(borrowAgainBook(borrow))
+        cancelReturnBook: (borrow) => dispatch(cancelReturnBook(borrow))
     };
 };
 

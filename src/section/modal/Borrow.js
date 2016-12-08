@@ -6,8 +6,7 @@ import {connect} from 'react-redux';
 import {_} from 'underscore'
 
 import {parseJson, handleError} from '../../support/Ajax'
-import {borrowBook} from '../../action';
-
+import {borrowBook, cancelBorrowBook} from '../../action';
 
 class Borrow extends React.Component {
 
@@ -38,10 +37,23 @@ class Borrow extends React.Component {
             .catch(handleError);
     }
 
-    returnBook() {
+    cancelBorrowBook() {
         let callNumberId = this.props.params.callNumberId;
         let borrowerId = this.props.params.reserverId;
-        console.log("빌려줌 취소")
+
+        let url = `/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
+
+        fetch(url, {
+            credentials: 'include',
+            method: 'delete'
+        }).then(parseJson)
+            .then((borrow) => {
+                this.setState({
+                    status: "BEFORE_BORROW"
+                });
+                this.props.cancelBorrowBook(borrow);
+            })
+            .catch(handleError);
     }
 
     render() {
@@ -85,6 +97,9 @@ class Borrow extends React.Component {
             let reserver = _.find(book.reservers, function (reserver) {
                 return reserver.id && reserver.id == reserverId
             });
+            if (reserver == null) {
+                return (<div>로딩중</div>)
+            }
             return (<div>
                 <p className="messageContainer">
                     <img className="profile" src={reserver.profile} alt="profile"/>
@@ -102,7 +117,7 @@ class Borrow extends React.Component {
                     <span>빌려줌 상태로 바뀌었습니다.</span>
                 </p>
                 <p className="selectContainer">
-                    <button className="button button_small" onClick={this.returnBook.bind(this)}>빌려줌 취소</button>
+                    <button className="button button_small" onClick={this.cancelBorrowBook.bind(this)}>빌려줌 취소</button>
                     <button className="button button_small"><Link to={returnTo}>돌아가기</Link></button>
                 </p>
             </div>)
@@ -112,7 +127,8 @@ class Borrow extends React.Component {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        borrowBook: (borrow) => dispatch(borrowBook(borrow))
+        borrowBook: (borrow) => dispatch(borrowBook(borrow)),
+        cancelBorrowBook: (borrow) => dispatch(cancelBorrowBook(borrow))
     };
 };
 
