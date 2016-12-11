@@ -35,7 +35,8 @@ class OwnerBook extends React.Component {
             }}><img className="profile" src={reserver.profile}/><span>{reserver.name}</span></Link>)
         }) : '';
 
-        let borrower = book.borrower ? (() => {
+        let hasBorrower = book.borrower && (!book.borrower.status || book.borrower.status == "OWNER_BORROW_BOOK") ? true : false;
+        let borrower = hasBorrower ? (() => {
             let callNumberId = book.callNumber.id;
             let borrowerId = book.borrower.id;
             return (<Link to={{

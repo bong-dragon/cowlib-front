@@ -39,7 +39,8 @@ class GuestBook extends React.Component {
         var book_img = book.bookMeta.coverUrl ? book.bookMeta.coverUrl : '/img/basic_book.png';
 
         var reserverCount = book.reservers ? book.reservers.length : 0;
-        var borrowMsg = book.borrower ? "누군가 읽고 있어요" : '아무도 안 읽고 있어요';
+        let hasBorrower = book.borrower && (!book.borrower.status || book.borrower.status == "OWNER_BORROW_BOOK") ? true : false;
+        var borrowMsg = hasBorrower ? "누군가 읽고 있어요" : '아무도 안 읽고 있어요';
 
         var isReserved = _.find(book.reservers, (reserver) => {
             return reserver.id === this.props.user_id;
