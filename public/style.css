@@ -18,6 +18,10 @@ button:focus {
 	outline:0;
 }
 
+a {
+	color: #767676;
+}
+
 
 .profile {
 	width: 30px;
@@ -27,17 +31,19 @@ button:focus {
 
 
 .userName {
+	padding-left: 3px;
 	width: 90px;
-	height: 18px;
+	height: 17px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	display: inline-block;
 }
 
 header {
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 	width: 100%;
 	position: absolute;
+	background: #f5f5f5;
+	border-bottom: 1px solid #d5d5d5;
 }
 
 header .title {
@@ -82,6 +88,7 @@ header .auth img{
 }
 
 section {
+	background: #fafafa;
 	padding-top: 50px;
 }
 
@@ -90,29 +97,34 @@ section .guide {
 }
 
 .bookContainer {
+	position: relative;
+    min-height: 120px;
+    padding: 10px 5px 10px 78px;
+
 	overflow: hidden;
-	margin: 0 10px;
-	padding: 10px 0;
+	/*padding: 10px 0;*/
 
 	border-bottom: 1px solid #eee;
 }
 
 .bookContainer .info {
-	float: left;
-	width: 213px;
 	padding-left: 20px;
 	line-height: 24px;
+	font-size:12px;
 }
 
 .bookContainer .book_title {
-	color: #3774B1;
 	font-weight: bold;
-	font-size: 16px;
+	font-size: 14px;
 }
 
+.bookContainer > .book_img {
+	position: absolute;
+	top: 15px;
+    left: 5px;
+}
 
 .bookContainer .book_img {
-	float: left;
 	width: 77px;
 	height: auto;
 	overflow: hidden;
@@ -176,7 +188,7 @@ section .searchContainer button {
 
 .searchModalOpenButton {
 	text-align: right;
-	margin: 10px;
+	margin: 10px 0px;
 }
 .showMoreButtonContainer {
 	overflow: hidden;
@@ -218,3 +230,59 @@ section .searchContainer button {
 	width: 27%;
 	font-size: 10px;
 }
+
+.titleContainer {
+	position: relative;
+	min-height: 120px;
+	padding: 60px 15px 10px 78px;
+}
+.titleContainer .profile {
+    position: absolute;
+	width: 50px;
+	height: 50px;
+    /*top: 15px;*/
+	bottom: 15px;
+    left: 15px;
+    margin-right: 15px;
+    border-radius: 3px;
+}
+.titleContainer .libraryName{
+	margin: 0;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.titleContainer .clipboard{
+	color: #767676;
+	font-size: 12px;
+    font-weight: normal;
+	padding: 0;
+    margin: 0;
+}
+
+.contentContainer {
+	border-top: 1px #e5e5e5 solid;
+	background: #fff;
+	padding: 16px;
+}
+
+.books {
+	border-radius: 3px;
+	border: 1px #ddd solid;
+}
+
+.bookContainer .profile {
+	padding: 2px;
+}
+
+.reserversContainer {
+	position: relative;
+	padding: 10px 0px 10px 61px;
+}
+
+.reserversContainer .title {
+	position: absolute;
+    top: 11px;
+    left: 0px;
+}
+
