@@ -25,6 +25,15 @@ button:focus {
 	border-radius: 50px;
 }
 
+
+.userName {
+	width: 90px;
+	height: 18px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: inline-block;
+}
+
 header {
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 	width: 100%;
