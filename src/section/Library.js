@@ -1,4 +1,5 @@
 import React from 'react';
+import Clipboard from "react-clipboard.js";
 import OwnerBook from './library/OwnerBook'
 import GuestBook from './library/GuestBook'
 import {getBooks} from '../action';
@@ -24,6 +25,10 @@ class Library extends React.Component {
 
         let body = await response.json();
         this.props.getBooks(body);
+    }
+
+    handleCopy(e){
+        alert("도서관 URL 이 복사되었습니다.");
     }
 
     componentWillMount() {
@@ -64,15 +69,22 @@ class Library extends React.Component {
 
         return (
             <section>
-                <div className="searchModalOpenButton">
-                    {isOwner && (<Link to={{
-                        pathname: '/search',
-                   state: { modal: true, returnTo: pathname }
-                    }}>추가하기</Link>)}
+                <div className="titleContainer">
+                    <img className="profile" src="https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/13001039_876663422455695_2534326839987696276_n.jpg?oh=376c676761df7ed408fb78c1c232d60c&amp;oe=58A1DBB4" alt="profile" />
+                    <h1 className="libraryName">이경륜 도서관</h1>
+                    <Clipboard className="clipboard" data-clipboard-text="hello" onSuccess={this.handleCopy}>URL 복사</Clipboard>
                 </div>
-                <ul className="books">
-                    {books_ui}
-                </ul>
+                <div className="contentContainer">
+                    <div className="searchModalOpenButton">
+                        {isOwner && (<Link to={{
+                            pathname: '/search',
+                       state: { modal: true, returnTo: pathname }
+                        }}>추가하기</Link>)}
+                    </div>
+                    <ul className="books">
+                        {books_ui}
+                    </ul>
+                </div>
             </section>
         )
     }

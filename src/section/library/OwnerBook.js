@@ -32,7 +32,7 @@ class OwnerBook extends React.Component {
             return (<Link key={i} to={{
                 pathname: `/borrow/${callNumberId}/${reserverId}`,
                 state: {modal: true, returnTo: returnTo}
-            }}><img className="profile" src={reserver.profile}/><span>{reserver.name}</span></Link>)
+            }}><img className="profile" src={reserver.profile}/><span className="userName">{reserver.name}</span></Link>)
         }) : '';
 
         let hasBorrower = book.borrower && (!book.borrower.status || book.borrower.status == "OWNER_BORROW_BOOK") ? true : false;
@@ -42,7 +42,7 @@ class OwnerBook extends React.Component {
             return (<Link to={{
                 pathname: `/returnBook/${callNumberId}/${borrowerId}`,
                 state: {modal: true, returnTo: returnTo}
-            }}><img className="profile" src={book.borrower.profile}/><span>{book.borrower.name}</span></Link>)
+            }}><img className="profile" src={book.borrower.profile}/><span className="userName">{book.borrower.name}</span></Link>)
         })() : '';
 
         return (<li className="bookContainer">
@@ -53,7 +53,7 @@ class OwnerBook extends React.Component {
                 <p dangerouslySetInnerHTML={{__html: title}} className="book_title"/>
                 <p><span>{book.bookMeta.author}</span> | <span>{book.bookMeta.publisher}</span></p>
                 <p>읽고있어요 : {borrower} </p>
-                <p>읽고싶어요 : {reservers}</p>
+                <div className="reserversContainer"><span className="title">읽고싶어요 : </span>{reservers}</div>
                 <button className="button" onClick={this.deleteBook.bind(this, book)}>삭제하기</button>
             </div>
         </li>)
