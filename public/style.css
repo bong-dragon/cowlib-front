@@ -119,6 +119,7 @@ section .guide {
 }
 
 .bookContainer > .book_img {
+	border: 1px solid #eee;
 	position: absolute;
 	top: 15px;
     left: 5px;
@@ -253,6 +254,8 @@ section .searchContainer button {
 }
 
 .titleContainer .clipboard{
+	background: none;
+	border: none;
 	color: #767676;
 	font-size: 12px;
     font-weight: normal;
@@ -278,6 +281,7 @@ section .searchContainer button {
 .reserversContainer {
 	position: relative;
 	padding: 10px 0px 10px 61px;
+	min-height: 39px;
 }
 
 .reserversContainer .title {
