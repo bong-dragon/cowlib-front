@@ -25,7 +25,6 @@ const Modal = React.createClass({
         background: '#fff'
     },
     goBack(e) {
-
         e.stopPropagation();
         browserHistory.goBack();
         console.log(this.props);
@@ -37,7 +36,7 @@ const Modal = React.createClass({
     render() {
         return (
                 <div className="modalContainer" style={this.styles} onClick={this.goBack}>
-                    <div className="modalCentent" style={this.contentStyles} onClick={this.stopPropagation}>
+                    <div style={this.contentStyles} onClick={this.stopPropagation}>
                         <p className="backButton"><Link to={this.props.returnTo}>Back</Link></p>
                         {React.cloneElement(this.props.children, {...this.props})}
                     </div>
