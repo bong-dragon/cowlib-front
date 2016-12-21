@@ -104,7 +104,7 @@ class Search extends React.Component {
     render() {
         var searchList = !!this.state.searchList.length ? this.state.searchList.map(function (book, i) {
             return <SearchBook key={i} book={book} onClick={this.handleAddCallNumber.bind(this, book.id)}/>
-        }.bind(this)) : (<li>검색 결과가 없습니다.</li>);
+        }.bind(this)) : (<li>검색 결과가 없어요.</li>);
 
         return (
             <section>

@@ -46,7 +46,7 @@ class Library extends React.Component {
 
     render() {
         let books = this.props.books;
-        let books_ui = (<li>도서관에 책이 없어요. 책을 추가해 주세요</li>);
+        let books_ui;
         let ownerId = this.props.params.ownerId;
         let userId = this.props.user_id;
         let isOwner = (userId && ownerId == userId) ? true : false;
@@ -81,9 +81,7 @@ class Library extends React.Component {
                        state: { modal: true, returnTo: pathname }
                         }}>추가하기</Link>)}
                     </div>
-                    <ul className="books">
-                        {books_ui}
-                    </ul>
+                    {books.length > 0? (<ul className="books">{books_ui}</ul>): (<p>도서관에 책이 없어요.</p>)}
                 </div>
             </section>
         )

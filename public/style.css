@@ -274,6 +274,10 @@ section .searchContainer button {
 	border: 1px #ddd solid;
 }
 
+.searchResults.books {
+	border: none;
+}
+
 .bookContainer .profile {
 	padding: 2px;
 }
