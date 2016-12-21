@@ -60,7 +60,7 @@ class GuestBook extends React.Component {
                 <p><span>{book.bookMeta.author}</span> | <span>{book.bookMeta.publisher}</span></p>
                 <p>{borrowMsg} </p>
                 <ul>대기자수 : {reserverCount}</ul>
-                {button}
+                {this.props.user_id&&(button)}
             </div>
         </li>)
     }
