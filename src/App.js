@@ -4,26 +4,43 @@ import Header from './section/Header';
 import {getAuthInfo} from './action';
 import {connect} from 'react-redux';
 import {Link} from 'react-router';
+import { browserHistory } from 'react-router'
 
 const Modal = React.createClass({
     styles: {
         position: 'fixed',
-        top: '13%',
-        right: '3%',
-        bottom: '3%',
-        left: '3%',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
         padding: 20,
-        boxShadow: '0px 0px 150px 130px rgba(0, 0, 0, 0.5)',
+        paddingTop: '13%',
+        background: 'rgba(0, 0, 0, 0.5)'
+    },
+    contentStyles: {
+        width: '100%',
+        height: '100%',
+        padding: 20,
         overflow: 'auto',
         background: '#fff'
     },
-
+    goBack(e) {
+        e.stopPropagation();
+        browserHistory.goBack();
+        console.log(this.props);
+        console.log(e);
+    },
+    stopPropagation(e){
+        e.stopPropagation();
+    },
     render() {
         return (
-            <div className="modalContainer" style={this.styles}>
-                <p className="backButton"><Link to={this.props.returnTo}>Back</Link></p>
-                {React.cloneElement(this.props.children, {...this.props})}
-            </div>
+                <div className="modalContainer" style={this.styles} onClick={this.goBack}>
+                    <div style={this.contentStyles} onClick={this.stopPropagation}>
+                        <p className="backButton"><Link to={this.props.returnTo}>Back</Link></p>
+                        {React.cloneElement(this.props.children, {...this.props})}
+                    </div>
+                </div>
         )
     }
 });
