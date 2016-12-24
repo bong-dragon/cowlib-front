@@ -97,9 +97,11 @@ router.delete('/callNumbers/:callNumberId/reserve', (req, res) => {
     fetch(url, {method:'delete'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
 });
 
-router.get('/books/', (req, res) => {
-    let ownerId = req.query.ownerId? req.query.ownerId: '';
-    let url = `${COWLIB_SERVER_API_URL}/v1/books?ownerId=${ownerId}`;
+router.get('/libraries/:ownerId', (req, res) => {
+    let ownerId = req.params.ownerId? req.params.ownerId: '';
+    let user = req.cookies["cowlib-user"];
+    let caller = user.id? user.id : '';
+    let url = `${COWLIB_SERVER_API_URL}/v1/libraries/${ownerId}?caller=${caller}`;
     console.log(`url: ${url}`);
 
     fetch(url).then(convertJson).then((json) => {
