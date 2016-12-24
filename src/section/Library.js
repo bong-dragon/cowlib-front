@@ -88,7 +88,7 @@ class Library extends React.Component {
                 <div className="titleContainer">
                     <img className="profile" src={owner.profile} alt="profile" />
                     <h1 className="libraryName">{owner.name} 도서관</h1>
-                    <Clipboard className="clipboard" data-clipboard-text="hello" onSuccess={this.handleCopy}>URL 복사</Clipboard>
+                    <Clipboard className="clipboard" data-clipboard-text={location.href} onSuccess={this.handleCopy}>URL 복사</Clipboard>
                 </div>
                 <div className="contentContainer">
                     <div className="searchModalOpenButton">
