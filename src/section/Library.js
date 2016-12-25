@@ -9,22 +9,28 @@ import {handleError} from '../support/Ajax'
 import {Link} from 'react-router';
 import {connect} from 'react-redux';
 
-
+const LOADING = "LOADING";
+const LOADED = "LOADED"
 
 class Library extends React.Component {
 
     constructor() {
         super();
+        this.state = {
+            status: LOADING,
+            owner: {}
+        };
     }
 
     async getBooks(ownerId) {
-        let response = await fetch(`/v1/books?ownerId=${ownerId}`, {
+        let response = await fetch(`/v1/libraries/${ownerId}`, {
             credentials: 'include',
             method: 'get'
         }).catch(handleError);
 
         let body = await response.json();
-        this.props.getBooks(body);
+        this.setState({status: LOADED, owner: body.owner});
+        this.props.getBooks(body.books);
     }
 
     handleCopy(e){
@@ -45,12 +51,23 @@ class Library extends React.Component {
     }
 
     render() {
+        if (this.state.status == LOADING) {
+            return (<section>
+                <div className="titleContainer">
+                </div>
+                <div className="contentContainer">
+                    <p>로딩중 입니다.</p>
+                </div>
+            </section>);
+        }
+
         let books = this.props.books;
         let books_ui;
-        let ownerId = this.props.params.ownerId;
+        let owner = this.state.owner;
         let userId = this.props.user_id;
-        let isOwner = (userId && ownerId == userId) ? true : false;
+        let isOwner = (userId && userId == owner.id) ? true : false;
         let pathname = this.props.location.pathname;
+
 
         if (books.length > 0) {
             console.log(books);
@@ -66,13 +83,12 @@ class Library extends React.Component {
                 });
             }
         }
-
         return (
             <section>
                 <div className="titleContainer">
-                    <img className="profile" src="https://scontent.xx.fbcdn.net/v/t1.0-1/p50x50/13001039_876663422455695_2534326839987696276_n.jpg?oh=376c676761df7ed408fb78c1c232d60c&amp;oe=58A1DBB4" alt="profile" />
-                    <h1 className="libraryName">이경륜 도서관</h1>
-                    <Clipboard className="clipboard" data-clipboard-text="hello" onSuccess={this.handleCopy}>URL 복사</Clipboard>
+                    <img className="profile" src={owner.profile} alt="profile" />
+                    <h1 className="libraryName">{owner.name} 도서관</h1>
+                    <Clipboard className="clipboard" data-clipboard-text={location.href} onSuccess={this.handleCopy}>URL 복사</Clipboard>
                 </div>
                 <div className="contentContainer">
                     <div className="searchModalOpenButton">
