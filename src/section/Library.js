@@ -65,7 +65,7 @@ class Library extends React.Component {
         let books_ui;
         let owner = this.state.owner;
         let userId = this.props.user_id;
-        let isOwner = (userId && owner.id == owner.id) ? true : false;
+        let isOwner = (userId && userId == owner.id) ? true : false;
         let pathname = this.props.location.pathname;
 
 
