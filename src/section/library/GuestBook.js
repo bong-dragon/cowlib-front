@@ -40,7 +40,13 @@ class GuestBook extends React.Component {
 
         var reserverCount = book.reservers ? book.reservers.length : 0;
         let hasBorrower = book.borrower && (!book.borrower.status || book.borrower.status == "OWNER_BORROW_BOOK") ? true : false;
-        var borrowMsg = hasBorrower ? "누군가 읽고 있어요" : '아무도 안 읽고 있어요';
+
+        var borrowMsg = (<p>아무도 안 읽고 있어요</p>);
+        if (book.borrower){
+            borrowMsg = (<p>읽고있어요 : <img className="profile" src={book.borrower.profile}/>
+            <span className="userName">{book.borrower.name}</span></p>)
+        }
+
 
         var isReserved = _.find(book.reservers, (reserver) => {
             return reserver.id === this.props.user_id;
@@ -58,7 +64,7 @@ class GuestBook extends React.Component {
             <div className="info">
                 <p dangerouslySetInnerHTML={{__html: title}} className="book_title"/>
                 <p><span>{book.bookMeta.author}</span> | <span>{book.bookMeta.publisher}</span></p>
-                <p>{borrowMsg} </p>
+                {borrowMsg}
                 <ul>대기자수 : {reserverCount}</ul>
                 {this.props.user_id?(button):""}
             </div>

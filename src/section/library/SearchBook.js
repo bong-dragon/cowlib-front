@@ -9,7 +9,7 @@ export default class SearchBook extends React.Component {
         let book = this.props.book;
         let title = book.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
         let book_img = book.coverUrl ? book.coverUrl : '/img/basic_book.png';
-        let button = book.isInserted ? <span>이미 추가되었습니다</span> :
+        let button = book.isInserted ? <span className="searchBookMsg">추가되었습니다</span> :
             <button className="button" onClick={this.props.onClick}>추가 하기</button>;
 
 
