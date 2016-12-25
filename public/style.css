@@ -1,223 +1,223 @@
 body {
-	max-width: 600px;
+    max-width: 600px;
 }
+
 ul {
-	padding: 0;
-	list-style: none;
+    padding: 0;
+    list-style: none;
 }
 
 p {
-	margin: 0;
+    margin: 0;
 }
 
 input:focus {
-	outline:0;
+    outline: 0;
 }
 
 button:focus {
-	outline:0;
+    outline: 0;
 }
 
 a {
-	color: #767676;
+    color: #767676;
 }
-
 
 .profile {
-	width: 30px;
-	border: 1px;
-	border-radius: 50px;
+    width: 30px;
+    border: 1px;
+    border-radius: 50px;
 }
 
-
 .userName {
-	padding-left: 3px;
-	width: 90px;
-	height: 17px;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	display: inline-block;
+    padding-left: 3px;
+    width: 90px;
+    height: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
 }
 
 header {
-	width: 100%;
-	position: absolute;
-	background: #f5f5f5;
-	border-bottom: 1px solid #d5d5d5;
+    width: 100%;
+    position: absolute;
+    background: #f5f5f5;
+    border-bottom: 1px solid #d5d5d5;
 }
 
 header .title {
-	margin-top: 6px;
-	margin-left: 10px;
-	float: left;
-	font-size: 30px;
+    margin-top: 6px;
+    margin-left: 10px;
+    float: left;
+    font-size: 30px;
 }
 
 header .title img {
-	width: 40px;
-	padding-bottom: 6px;
-	padding-right: 6px;
+    width: 40px;
+    padding-bottom: 6px;
+    padding-right: 6px;
 }
 
 header a {
-	color: #000;
+    color: #000;
 }
 
 header .auth {
-	padding-top: 11px;
-	float: right;
-	padding-right: 20px;
+    padding-top: 11px;
+    float: right;
+    padding-right: 20px;
 }
 
 header .auth button {
-	border: none;
-	border-radius: 5px;
-	padding: 1px 5px;
-	background-color: #365899;
-	color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 1px 5px;
+    background-color: #365899;
+    color: #fff;
 }
 
 header .auth a {
-	display: block;
-	border-radius: 17px;
+    display: block;
+    border-radius: 17px;
 }
 
-header .auth img{
-	padding: 4px;
-	width:30px;
+header .auth img {
+    padding: 4px;
+    width: 30px;
 }
 
 section {
-	background: #fafafa;
-	padding-top: 50px;
+    background: #fafafa;
+    padding-top: 50px;
 }
 
 section .guide {
-	width: 100%;
+    width: 100%;
 }
 
 .bookContainer {
-	position: relative;
+    position: relative;
     min-height: 120px;
     padding: 10px 5px 10px 78px;
 
-	overflow: hidden;
-	/*padding: 10px 0;*/
+    overflow: hidden;
+    /*padding: 10px 0;*/
 
-	border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 
 .bookContainer .info {
-	padding-left: 20px;
-	line-height: 24px;
-	font-size:12px;
+    padding-left: 20px;
+    line-height: 24px;
+    font-size: 12px;
 }
 
 .bookContainer .book_title {
-	font-weight: bold;
-	font-size: 14px;
+    font-weight: bold;
+    font-size: 14px;
 }
 
 .bookContainer > .book_img {
-	border: 1px solid #eee;
-	position: absolute;
-	top: 15px;
+    border: 1px solid #eee;
+    position: absolute;
+    top: 15px;
     left: 5px;
 }
 
 .bookContainer .book_img {
-	width: 77px;
-	height: auto;
-	overflow: hidden;
-	background-size: contain;
-	background-position: center center;
+    width: 77px;
+    height: auto;
+    overflow: hidden;
+    background-size: contain;
+    background-position: center center;
 }
-.bookContainer .book_img  img{
-	max-height: 112px;
-	max-width: 77px;
-	 /*max-height: 92%; */
-	 /*max-width: 92%; */
+
+.bookContainer .book_img img {
+    max-height: 112px;
+    max-width: 77px;
+    /*max-height: 92%; */
+    /*max-width: 92%; */
 }
 
 .bookContainer .book_img_samll {
-	width: 67px;
+    width: 67px;
 }
 
-
 section .searchContainer {
-	padding: 10px;
-	position: relative;
+    padding: 10px;
+    position: relative;
 }
 
 section .searchContainer input {
-	width: 100%;
-	padding: 7px;
+    width: 100%;
+    padding: 7px;
     border: 0;
     background: #EEE;
     border-radius: 10px;
 }
 
 section .searchContainer button {
-	border: none;
-	position: absolute;
-	width: 27px;
-	height: 27px;
-	top: 15px;
-	right: 14px;
+    border: none;
+    position: absolute;
+    width: 27px;
+    height: 27px;
+    top: 15px;
+    right: 14px;
 
-	background-color: Transparent;
-	background-size: 23px;
-	background-repeat:no-repeat;
-	background-image: url("/img/search_icon.png")
+    background-color: Transparent;
+    background-size: 23px;
+    background-repeat: no-repeat;
+    background-image: url("/img/search_icon.png")
 }
 
 .modalContainer section {
-	padding-top: 10px;
+    padding-top: 10px;
 }
 
 .modalContainer .bookContainer .info {
-	float: left;
-	width: 146px;
-	padding-left: 13px;
-	line-height: 16px;
-	font-size: smaller;
+    float: left;
+    width: 146px;
+    padding-left: 13px;
+    line-height: 16px;
+    font-size: smaller;
 }
 
 .modalContainer .backButton {
-	text-align: right;
+    text-align: right;
 }
 
 .searchModalOpenButton {
-	text-align: right;
-	margin: 10px 0px;
+    text-align: right;
+    margin: 10px 0px;
 }
+
 .showMoreButtonContainer {
-	overflow: hidden;
-	margin: 10px 0px;
-	padding: 0px 60px;
+    overflow: hidden;
+    margin: 10px 0px;
+    padding: 0px 60px;
 }
 
 .borrowContainer .messageContainer {
-	padding: 10px;
+    padding: 10px;
 }
 
-.borrowContainer .messageContainer > *{
-	margin: 0px 1px;
+.borrowContainer .messageContainer > * {
+    margin: 0px 1px;
 }
 
 .selectContainer {
-	text-align: center;
+    text-align: center;
 }
 
 #showMoreButton {
-	overflow: hidden;
-	margin: 10px 0px;
-	padding: 0px 10px;
-	width:100%;
+    overflow: hidden;
+    margin: 10px 0px;
+    padding: 0px 10px;
+    width: 100%;
 }
 
 .button {
-	background-color: #f0f0f0;
+    background-color: #f0f0f0;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 0.25em;
     height: 2.5em;
@@ -228,69 +228,85 @@ section .searchContainer button {
 }
 
 .button_small {
-	width: 27%;
-	font-size: 10px;
+    width: 27%;
+    font-size: 10px;
 }
 
 .titleContainer {
-	position: relative;
-	min-height: 120px;
-	padding: 60px 15px 10px 78px;
+    position: relative;
+    min-height: 120px;
+    padding: 60px 15px 10px 78px;
 }
+
 .titleContainer .profile {
     position: absolute;
-	width: 50px;
-	height: 50px;
+    width: 50px;
+    height: 50px;
     /*top: 15px;*/
-	bottom: 15px;
+    bottom: 15px;
     left: 15px;
     margin-right: 15px;
     border-radius: 3px;
 }
-.titleContainer .libraryName{
-	margin: 0;
-	font-size: 16px;
-	font-weight: bold;
+
+.titleContainer .libraryName {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-.titleContainer .clipboard{
-	background: none;
-	border: none;
-	color: #767676;
-	font-size: 12px;
+.titleContainer .clipboard {
+    background: none;
+    border: none;
+    color: #767676;
+    font-size: 12px;
     font-weight: normal;
-	padding: 0;
+    padding: 0;
     margin: 0;
 }
 
 .contentContainer {
-	border-top: 1px #e5e5e5 solid;
-	background: #fff;
-	padding: 16px;
+    border-top: 1px #e5e5e5 solid;
+    background: #fff;
+    padding: 16px;
 }
 
 .books {
-	border-radius: 3px;
-	border: 1px #ddd solid;
+    border-radius: 3px;
+    border: 1px #ddd solid;
 }
 
 .searchResults.books {
-	border: none;
+    border: none;
 }
 
 .bookContainer .profile {
-	padding: 2px;
+    padding: 2px;
 }
 
 .reserversContainer {
-	position: relative;
-	padding: 10px 0px 10px 61px;
-	min-height: 39px;
+    position: relative;
+    padding: 10px 0px 10px 61px;
+    min-height: 39px;
 }
 
 .reserversContainer .title {
-	position: absolute;
+    position: absolute;
     top: 11px;
     left: 0px;
 }
 
+.searchBookMsg {
+    height: 2.5em;
+    line-height: 2.5;
+    margin-top: 0.25em;
+    font-weight: bold;
+    /*margin: 0.25em;*/
+    /*padding: 0 1em;*/
+    width: 58%;
+    display: block;
+}
+
+.noSearchResultMsg {
+    padding: 10px;
+}
