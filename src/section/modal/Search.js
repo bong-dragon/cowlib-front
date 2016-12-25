@@ -1,8 +1,8 @@
 import React from 'react';
 import 'whatwg-fetch';
-import SearchBook from './library/SearchBook'
-import {parseJson, handleError} from '../support/Ajax'
-import {addBook} from '../action';
+import SearchBook from '../library/SearchBook'
+import {parseJson, handleError} from '../../support/Ajax'
+import {addBook} from '../../action';
 import {_} from 'underscore'
 
 import {connect} from 'react-redux';
@@ -14,7 +14,8 @@ class Search extends React.Component {
         this.state = {
             q: '',
             searchList: [],
-            pageno: 0
+            pageno: 0,
+            isShowMorePossible: false
         };
     }
 
@@ -62,12 +63,13 @@ class Search extends React.Component {
             method: 'get'
         }).catch(handleError);
 
-        let searchList = await response.json();
-        console.log(searchList);
+        let searchResult = await response.json();
+        console.log(searchResult);
 
         this.setState({
-            searchList: searchList,
-            pageno: 1
+            searchList: searchResult.bookMetas,
+            pageno: 1,
+            isShowMorePossible : this.isShowMorePossible(searchResult.totalCount, 1)
         });
     }
 
@@ -83,23 +85,26 @@ class Search extends React.Component {
             method: 'get'
         }).catch(handleError);
 
-        let searchList = await response.json();
-        console.log(searchList);
+        let searchResult = await response.json();
+        console.log(searchResult);
 
         this.setState({
-            searchList: _.union(this.state.searchList, searchList),
-            pageno: pageno
-        });
+            searchList: _.union(this.state.searchList, searchResult.bookMetas),
+            pageno: pageno,
+            isShowMorePossible : this.isShowMorePossible(searchResult.totalCount, pageno)
+    });
     }
 
-    isShowMorePossible(){
-        return this.state.pageno < 3 && this.state.pageno > 0;
+    isShowMorePossible(totalCount, pageno){
+        const NUM_PER_PAGE = 10;
+        const MAX_PAGE_NUM = 3;
+        return pageno * NUM_PER_PAGE < totalCount && pageno < MAX_PAGE_NUM;
     }
 
     render() {
         var searchList = !!this.state.searchList.length ? this.state.searchList.map(function (book, i) {
             return <SearchBook key={i} book={book} onClick={this.handleAddCallNumber.bind(this, book.id)}/>
-        }.bind(this)) : (<li>검색 결과가 없습니다.</li>);
+        }.bind(this)) : (<li>검색 결과가 없어요.</li>);
 
         return (
             <section>
@@ -117,7 +122,7 @@ class Search extends React.Component {
                 <ul className="searchResults books">
                     {searchList}
                 </ul>
-                {this.isShowMorePossible() && (
+                {this.state.isShowMorePossible && (
                     <div className="showMoreButtonContainer">
                         <button className="button" id="showMoreButton" onClick={this.handleShowMore.bind(this)}>더보기</button>
                     </div>

@@ -19,8 +19,8 @@ class Auth extends React.Component {
     }
 
     render() {
-        var profile = this.props.profile ? this.props.profile : "/img/basic_profile.png";
-        var myLibrary = "/" + this.props.user_id;
+        var profile = this.props.auth.profile ? this.props.auth.profile : "/img/basic_profile.png";
+        var myLibrary = "/" + this.props.auth.id;
 
         var loginButton = (<button onClick={this.handleLogin.bind(this)}>
             <img src="/img/facebook.png"></img><span>로그인</span></button>);
@@ -29,7 +29,7 @@ class Auth extends React.Component {
         var myLibraryButton = (<Link to={myLibrary}>
             <img className="profile" src={profile} alt="profile"/><span>내도서관</span></Link>);
 
-        var button = !!this.props.user_id ? myLibraryButton : loginButton;
+        var button = !!this.props.auth.id ? myLibraryButton : loginButton;
 
         return (
             <div className="auth">
@@ -47,10 +47,7 @@ let mapDispatchToProps = (dispatch) => {
 
 let mapStateToProps = (state) => {
     return {
-        user_id: state.auth.user_id,
-        facebook_id: state.auth.facebook_id,
-        profile: state.auth.profile,
-        name: state.auth.name
+        auth: state.auth
     };
 };
 

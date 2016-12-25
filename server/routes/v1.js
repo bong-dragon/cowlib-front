@@ -43,9 +43,9 @@ router.delete('/callNumbers', (req, res) => {
 });
 
 router.post('/callNumbers/:callNumberId/borrow', (req, res) => {
-    let user = req.cookies["cowlib-user"];
+    // let ownerId = req.cookies["cowlib-user"];
+    let borrowerId = req.query.borrowerId? req.query.borrowerId: '';
     let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
-    let borrowerId = user? user.id : '';
     
     let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
     console.log(`url: ${url}`);
@@ -53,11 +53,22 @@ router.post('/callNumbers/:callNumberId/borrow', (req, res) => {
     fetch(url, {method:'post'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
 });
 
-router.delete('/callNumbers/:callNumberId/borrow', (req, res) => {
-    let user = req.cookies["cowlib-user"];
+router.put('/callNumbers/:callNumberId/borrow', (req, res) => {
+    // let ownerId = req.cookies["cowlib-user"];
+    let borrowerId = req.query.borrowerId? req.query.borrowerId: '';
     let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
-    let borrowerId = user? user.id : '';
     
+    let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
+    console.log(`url: ${url}`);
+
+    fetch(url, {method:'put'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
+});
+
+router.delete('/callNumbers/:callNumberId/borrow', (req, res) => {
+    // let ownerId = req.cookies["cowlib-user"];
+    let borrowerId = req.query.borrowerId? req.query.borrowerId: '';
+    let callNumberId = req.params.callNumberId? req.params.callNumberId: '';
+
     let url = `${COWLIB_SERVER_API_URL}/v1/callNumbers/${callNumberId}/borrow?borrowerId=${borrowerId}`;
     console.log(`url: ${url}`);
 
@@ -86,9 +97,11 @@ router.delete('/callNumbers/:callNumberId/reserve', (req, res) => {
     fetch(url, {method:'delete'}).then(convertJson).then((json) => res.json(json)).catch(handleException);
 });
 
-router.get('/books/', (req, res) => {
-    let ownerId = req.query.ownerId? req.query.ownerId: '';
-    let url = `${COWLIB_SERVER_API_URL}/v1/books?ownerId=${ownerId}`;
+router.get('/libraries/:ownerId', (req, res) => {
+    let ownerId = req.params.ownerId? req.params.ownerId: '';
+    let user = req.cookies["cowlib-user"];
+    let caller = user.id? user.id : '';
+    let url = `${COWLIB_SERVER_API_URL}/v1/libraries/${ownerId}?caller=${caller}`;
     console.log(`url: ${url}`);
 
     fetch(url).then(convertJson).then((json) => {

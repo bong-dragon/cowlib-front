@@ -3,7 +3,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {handleError} from '../../support/Ajax'
 import 'whatwg-fetch';
-import {reserveBook} from '../../action';
+import {reserveBook, cancelBook} from '../../action';
+import {_} from 'underscore';
 
 class GuestBook extends React.Component {
 
@@ -19,15 +20,38 @@ class GuestBook extends React.Component {
         this.props.reserveBook(reserveHistory, this.props.user);
     }
 
+    async cancelBook(book) {
+        let callNumberId = book.callNumber.id;
+
+        let response = await fetch(`/v1/callNumbers/${callNumberId}/reserve`, {
+            credentials: 'include',
+            method: 'delete'
+        }).catch(handleError);
+
+        let reserveHistory = await response.json();
+        this.props.cancelBook(reserveHistory, this.props.user);
+    }
+
     render() {
+        console.log("render guest")
         var book = this.props.book;
         var title = book.bookMeta.title.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
         var book_img = book.bookMeta.coverUrl ? book.bookMeta.coverUrl : '/img/basic_book.png';
 
         var reserverCount = book.reservers ? book.reservers.length : 0;
-        var borrowMsg = book.borrower ? "누군가 읽고 있어요" : '아무도 안 읽고 있어요';
+        let hasBorrower = book.borrower && (!book.borrower.status || book.borrower.status == "OWNER_BORROW_BOOK") ? true : false;
+        var borrowMsg = hasBorrower ? "누군가 읽고 있어요" : '아무도 안 읽고 있어요';
 
-        return (<li>
+        var isReserved = _.find(book.reservers, (reserver) => {
+            return reserver.id === this.props.user_id;
+        });
+        let buttonForReserve = (<button className="button" onClick={this.reserveBook.bind(this, book)}>예약하기</button>)
+        let buttonForCancel = (<button className="button" onClick={this.cancelBook.bind(this, book)}>취소하기</button>)
+        let button = isReserved? buttonForCancel: buttonForReserve;
+
+        console.log(book);
+        console.log(isReserved? "i'm": "not");
+        return (<li className="bookContainer">
             <div className="book_img">
                 <img className="book_img" src={book_img} alt={title}/>
             </div>
@@ -36,7 +60,7 @@ class GuestBook extends React.Component {
                 <p><span>{book.bookMeta.author}</span> | <span>{book.bookMeta.publisher}</span></p>
                 <p>{borrowMsg} </p>
                 <ul>대기자수 : {reserverCount}</ul>
-                <button className="button" onClick={this.reserveBook.bind(this, book)}>예약하기</button>
+                {this.props.user_id?(button):""}
             </div>
         </li>)
     }
@@ -45,7 +69,7 @@ class GuestBook extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        user_id: state.auth.user_id,
+        user_id: state.auth.id,
         user: state.auth
     };
 };
@@ -53,7 +77,8 @@ let mapStateToProps = (state) => {
 
 let mapDispatchToProps = (dispatch) => {
     return {
-        reserveBook: (book, user) => dispatch(reserveBook(book, user))
+        reserveBook: (book, user) => dispatch(reserveBook(book, user)),
+        cancelBook: (book, user) => dispatch(cancelBook(book, user))
     };
 };
 
