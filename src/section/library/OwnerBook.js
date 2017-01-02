@@ -45,7 +45,9 @@ class OwnerBook extends React.Component {
             }}><img className="profile" src={book.borrower.profile}/><span className="userName">{book.borrower.name}</span></Link>)
         })() : '';
 
-        return (<li className="bookContainer">
+        let hashId = "book"+book.callNumber.id;
+
+        return (<li className="bookContainer" id={hashId}>
             <div className="book_img">
                 <img className="book_img" src={bookImage} alt={title}/>
             </div>
