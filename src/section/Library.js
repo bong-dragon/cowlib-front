@@ -33,7 +33,7 @@ class Library extends React.Component {
         this.props.getBooks(body.books);
     }
 
-    handleCopy(e){
+    handleCopy(e) {
         alert("도서관 URL 이 복사되었습니다.");
     }
 
@@ -44,10 +44,22 @@ class Library extends React.Component {
     componentWillReceiveProps(nextProps) {
         let lastOwnerId = this.props.params.ownerId;
         let recentOwnerId = nextProps.params.ownerId;
-        if(lastOwnerId !== recentOwnerId){
+        if (lastOwnerId !== recentOwnerId) {
             console.log(`${lastOwnerId} -> ${recentOwnerId}`);
             this.getBooks(recentOwnerId);
-        }   
+        }
+    }
+
+    componentDidUpdate() {
+        var hash = window.location.hash;
+        if (hash) {
+            var element = document.querySelector(hash);
+            if (element) {
+                element.scrollIntoView();
+                console.log("hash");
+            }
+        }
+
     }
 
     render() {
@@ -86,9 +98,10 @@ class Library extends React.Component {
         return (
             <section>
                 <div className="titleContainer">
-                    <img className="profile" src={owner.profile} alt="profile" />
+                    <img className="profile" src={owner.profile} alt="profile"/>
                     <h1 className="libraryName">{owner.name} 도서관</h1>
-                    <Clipboard className="clipboard" data-clipboard-text={location.href} onSuccess={this.handleCopy}>URL 복사</Clipboard>
+                    <Clipboard className="clipboard" data-clipboard-text={location.href} onSuccess={this.handleCopy}>URL
+                        복사</Clipboard>
                 </div>
                 <div className="contentContainer">
                     <div className="searchModalOpenButton">
@@ -97,7 +110,7 @@ class Library extends React.Component {
                        state: { modal: true, returnTo: pathname }
                         }}>추가하기</Link>)}
                     </div>
-                    {books.length > 0? (<ul className="books">{books_ui}</ul>): (<p>도서관에 책이 없어요.</p>)}
+                    {books.length > 0 ? (<ul className="books">{books_ui}</ul>) : (<p>도서관에 책이 없어요.</p>)}
                 </div>
             </section>
         )

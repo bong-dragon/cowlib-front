@@ -8,6 +8,7 @@ import App from './App';
 import Library from './section/Library';
 import Main from './section/Main';
 import Search from './section/modal/Search';
+import Alert from './section/modal/Alert';
 import Borrow from './section/modal/Borrow';
 import ReturnBook from './section/modal/ReturnBook';
 
@@ -22,6 +23,7 @@ ReactDOM.render((
             <Route path="/" component={App}>
                 <IndexRoute component={Main}/>
                 <Route path="search" component={Search}/>
+                <Route path="alert" component={Alert}/>
                 <Route path="borrow/:callNumberId/:reserverId" component={Borrow}/>
                 <Route path="returnBook/:callNumberId/:borrowerId" component={ReturnBook}/>
                 <Route path=":ownerId" component={Library}/>
